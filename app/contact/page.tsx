@@ -167,12 +167,12 @@ export default function ContactPage() {
                   onClick={() => {
                     try {
                       if (typeof window !== 'undefined') {
-                        window.open('https://zalo.me/0877748888', '_blank', 'noopener,noreferrer');
+                        window.open('https://zalo.me/0877484888', '_blank', 'noopener,noreferrer');
                       }
                     } catch (error) {
                       console.error('Error opening Zalo:', error);
                       // Fallback: try to navigate in same window
-                      window.location.href = 'https://zalo.me/0877748888';
+                      window.location.href = 'https://zalo.me/0877484888';
                     }
                   }}
                   className="w-full bg-gradient-to-r from-blue-400 to-cyan-500 hover:from-blue-500 hover:to-cyan-600 text-white font-semibold px-6 py-3 rounded-md inline-flex items-center justify-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 cursor-pointer"
@@ -209,7 +209,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h4 className="font-semibold text-white">Hotline</h4>
-                      <a href="tel:+8487748888" className="text-blue-400 hover:text-blue-300 transition-colors">
+                      <a href="tel:+84877484888" className="text-blue-400 hover:text-blue-300 transition-colors">
                         +84 877 488 88
                       </a>
                     </div>
