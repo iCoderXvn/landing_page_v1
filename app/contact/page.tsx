@@ -210,7 +210,7 @@ export default function ContactPage() {
                     <div>
                       <h4 className="font-semibold text-white">Hotline</h4>
                       <a href="tel:+84877484888" className="text-blue-400 hover:text-blue-300 transition-colors">
-                        +84 877 488 88
+                        +84 877 484 888
                       </a>
                     </div>
                   </div>
