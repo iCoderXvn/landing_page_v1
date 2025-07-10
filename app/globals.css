@@ -255,3 +255,8 @@ body {
 .neon-glow:hover:nth-child(4) {
   color: #0088cc; /* Telegram blue */
 }
+
+/* Gradient background overlay */
+.gradient-bg-overlay {
+  @apply absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-black/40;
+}

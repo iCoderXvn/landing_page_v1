@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -22,9 +24,12 @@ import {
   Award,
   Facebook,
   Youtube,
+  Menu,
+  X,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { useState } from "react"
 
 // Custom X (Twitter) and Telegram icons as SVG components
 const XIcon = ({ className }: { className?: string }) => (
@@ -40,14 +45,16 @@ const TelegramIcon = ({ className }: { className?: string }) => (
 )
 
 export default function HomePage() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
   return (
     <div className="flex flex-col min-h-screen relative w-full overflow-x-hidden">
       <BinaryRain />
 
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b border-blue-500/20 bg-black/80 backdrop-blur-md" role="banner">
+      <header className="fixed top-0 z-50 w-full border-b border-blue-500/20 bg-black/90 backdrop-blur-md" role="banner">
         <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
-          <div className="flex items-center space-x-3">
+          <Link href="#home" className="flex items-center space-x-3">
             <Image
               src="/logo.png"
               alt="iCoderX Logo - Automation Solutions"
@@ -57,10 +64,10 @@ export default function HomePage() {
               priority
             />
             <span className="text-2xl font-bold gradient-text">iCoderX</span>
-          </div>
+          </Link>
 
           <nav className="hidden md:flex items-center space-x-8 text-sm font-medium" role="navigation" aria-label="Main navigation">
-            <Link href="#home" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Đi đến trang chủ">
+            <Link href="#home" className="text-blue-400 font-semibold" aria-label="Đi đến trang chủ">
               Trang Chủ
             </Link>
             <Link href="#services" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Xem dịch vụ của chúng tôi">
@@ -72,16 +79,87 @@ export default function HomePage() {
             <Link href="#clients" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Đọc phản hồi khách hàng">
               Khách Hàng
             </Link>
+            <Link href="/blog" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Đọc blog và tin tức">
+              Blog
+            </Link>
             <Link href="#contact" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Liên hệ với chúng tôi">
               Liên Hệ
             </Link>
           </nav>
 
-          <Link href="/contact" className="cyber-button text-black font-semibold px-6 inline-flex items-center justify-center rounded-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10" aria-label="Nhận báo giá miễn phí cho dự án tự động hóa">Báo Giá Miễn Phí</Link>
+          <div className="flex items-center gap-4">
+            <Link href="/contact" className="hidden sm:inline-flex cyber-button text-black font-semibold px-6 items-center justify-center rounded-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10" aria-label="Nhận báo giá miễn phí cho dự án tự động hóa">Báo Giá Miễn Phí</Link>
+            
+            {/* Mobile menu button */}
+            <button
+              className="md:hidden p-2 text-gray-300 hover:text-blue-400 transition-colors"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle mobile menu"
+            >
+              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-blue-500/20 bg-black/95 backdrop-blur-md">
+            <nav className="container mx-auto px-4 py-4 flex flex-col space-y-4" role="navigation">
+              <Link 
+                href="#home" 
+                className="text-blue-400 font-semibold py-2 px-2 rounded transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Trang Chủ
+              </Link>
+              <Link 
+                href="#services" 
+                className="text-gray-300 hover:text-blue-400 py-2 px-2 rounded transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Dịch Vụ
+              </Link>
+              <Link 
+                href="#solutions" 
+                className="text-gray-300 hover:text-blue-400 py-2 px-2 rounded transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Giải Pháp
+              </Link>
+              <Link 
+                href="#clients" 
+                className="text-gray-300 hover:text-blue-400 py-2 px-2 rounded transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Khách Hàng
+              </Link>
+              <Link 
+                href="/blog" 
+                className="text-gray-300 hover:text-blue-400 py-2 px-2 rounded transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Blog
+              </Link>
+              <Link 
+                href="#contact" 
+                className="text-gray-300 hover:text-blue-400 py-2 px-2 rounded transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Liên Hệ
+              </Link>
+              <Link 
+                href="/contact" 
+                className="cyber-button text-black font-semibold px-6 py-3 rounded-md text-sm transition-colors mt-4 text-center"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Báo Giá Miễn Phí
+              </Link>
+            </nav>
+          </div>
+        )}
       </header>
 
-      <main className="flex-1 relative z-10" role="main">
+      <main className="flex-1 relative z-10 pt-16" role="main">
         {/* Hero Section */}
         <section id="home" className="w-full py-20 md:py-32 lg:py-40 relative overflow-hidden" aria-labelledby="hero-heading">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-black/40" aria-hidden="true" />

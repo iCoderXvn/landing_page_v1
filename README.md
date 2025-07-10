@@ -13,6 +13,10 @@ A modern, responsive landing page built with Next.js 15, TypeScript, and Tailwin
 - **Accessibility**: ARIA labels and semantic HTML
 - **TypeScript**: Full type safety throughout the codebase
 - **Component Library**: Built with Radix UI and shadcn/ui components
+- **Blog System**: SQLite-powered blog with topic categorization
+- **Admin Dashboard**: Rich text editor with formatting toolbar
+- **Security**: JWT-based authentication for admin operations
+- **Content Management**: Create, edit, delete posts and topics
 
 ## 🛠 Tech Stack
 
@@ -65,6 +69,35 @@ A modern, responsive landing page built with Next.js 15, TypeScript, and Tailwin
 
 4. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000) to see the application.
+
+## 📝 Blog System
+
+The project includes a comprehensive blog system with:
+
+### Features
+- **SQLite Database**: Persistent storage for posts and topics
+- **Topic Categories**: Organize posts with topics/categories
+- **Rich Text Editor**: Format posts with markdown-style toolbar
+- **Publishing Control**: Draft and published post states
+- **Admin Dashboard**: Secure admin interface at `/admin`
+
+### Admin Access
+- **Default Login**: `admin` / `admin123`
+- **Security**: JWT-based authentication
+- **Features**: Create, edit, delete posts and topics
+
+### Content Creation
+- **Formatting Support**: Bold, italic, headings, quotes, lists
+- **Media Support**: Image embedding by URL
+- **Link Support**: Hyperlinks and embedded links
+- **Code Support**: Inline code and code blocks
+
+For detailed formatting instructions, see:
+- [`BLOG_FORMATTING_GUIDE.md`](./BLOG_FORMATTING_GUIDE.md) - Complete formatting reference
+- [`AI_ASSISTANT_GUIDE.md`](./AI_ASSISTANT_GUIDE.md) - Quick reference for AI assistants
+
+### Security
+All admin operations are secured with JWT authentication. See [`SECURITY_IMPLEMENTATION.md`](./SECURITY_IMPLEMENTATION.md) for complete security details.
 
 ## 🚀 Deployment
 
