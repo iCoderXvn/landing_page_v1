@@ -605,7 +605,7 @@ export default function HomePage() {
                   <Youtube className="h-6 w-6" aria-hidden="true" />
                 </Link>
                 <Link
-                  href="https://t.me/iCoderX_Support"
+                  href="https://t.me/iCoderXvn"
                   className="text-gray-400 hover:text-blue-400 transition-all duration-300 hover:scale-110 neon-glow"
                   aria-label="Liên hệ iCoderX qua Telegram"
                 >
