@@ -4,9 +4,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BinaryRain } from "@/components/binary-rain";
-import { Filter, Zap, Menu, X } from "lucide-react";
+import { Filter, Zap, Menu, X, RefreshCw } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+
+// Ensure this page is always dynamically rendered
+export const dynamic = 'force-dynamic';
 
 interface Topic {
   id: number;
@@ -30,6 +33,7 @@ export default function BlogPage() {
   const [topics, setTopics] = useState<Topic[]>([]);
   const [selectedTopic, setSelectedTopic] = useState<string>("all");
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Generate consistent random colors for topics
@@ -52,13 +56,48 @@ export default function BlogPage() {
 
   useEffect(() => {
     fetchData();
+    
+    // Add focus listener to refresh when user comes back to the tab
+    const handleFocus = () => {
+      fetchData();
+    };
+    
+    window.addEventListener('focus', handleFocus);
+    
+    // Set up periodic refresh every 30 seconds
+    const intervalId = setInterval(() => {
+      fetchData();
+    }, 30000);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+      clearInterval(intervalId);
+    };
   }, []);
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await fetchData();
+  };
 
   const fetchData = async () => {
     try {
+      // Add timestamp to prevent browser caching
+      const timestamp = Date.now();
       const [postsResponse, topicsResponse] = await Promise.all([
-        fetch('/api/blog'),
-        fetch('/api/topics')
+        fetch(`/api/blog?_t=${timestamp}`, {
+          cache: 'no-store',
+          headers: {
+            'Cache-Control': 'no-cache'
+          }
+        }),
+        fetch(`/api/topics?_t=${timestamp}`, {
+          cache: 'no-store',
+          headers: {
+            'Cache-Control': 'no-cache'
+          }
+        })
       ]);
       
       const postsData = await postsResponse.json();
@@ -74,6 +113,7 @@ export default function BlogPage() {
       console.error('Error fetching data:', error);
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   };
 
@@ -278,6 +318,17 @@ export default function BlogPage() {
                   )}
                 </p>
               </div>
+              
+              {/* Refresh Button */}
+              <Button
+                onClick={handleRefresh}
+                disabled={refreshing}
+                variant="outline"
+                className="bg-gray-800/80 border-gray-600 text-gray-300 hover:bg-gray-700/80 hover:text-white transition-all duration-200"
+              >
+                <RefreshCw className={`w-4 h-4 mr-2 ${refreshing ? 'animate-spin' : ''}`} />
+                {refreshing ? 'Đang tải...' : 'Làm mới'}
+              </Button>
             </div>
             
             {/* Topic Filter Buttons */}

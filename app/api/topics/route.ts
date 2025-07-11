@@ -6,7 +6,14 @@ export async function GET(request: NextRequest) {
   try {
     // Topics are publicly accessible for blog navigation
     const topics = await topicOperations.getAll();
-    return NextResponse.json({ success: true, topics });
+    const response = NextResponse.json({ success: true, topics });
+    
+    // Prevent caching to ensure fresh data
+    response.headers.set('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    
+    return response;
   } catch (error) {
     console.error('Error fetching topics:', error);
     return NextResponse.json(
