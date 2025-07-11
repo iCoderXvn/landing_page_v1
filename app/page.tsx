@@ -644,6 +644,150 @@ export default function HomePage() {
         </section>
       </main>
 
+      {/* Google Maps Location Section */}
+      <section className="w-full py-16 bg-gradient-to-b from-black to-gray-900 border-t border-blue-500/20 relative">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center mb-12">
+            <Badge variant="outline" className="border-blue-500/50 text-blue-400 bg-blue-500/10 px-4 py-2 mb-6">
+              <Target className="w-4 h-4 mr-2" />
+              Vị Trí Của Chúng Tôi
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <span className="gradient-text">Tìm Thấy Chúng Tôi</span>
+            </h2>
+            <p className="text-gray-400 max-w-2xl mx-auto">
+              Địa chỉ văn phòng iCoderX tại Hà Nội. Ghé thăm chúng tôi để trao đổi trực tiếp về dự án tự động hóa của bạn.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8 items-start">
+            {/* Map */}
+            <div className="relative rounded-xl overflow-hidden border border-blue-500/20 bg-gray-900/50 backdrop-blur-sm">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14895.455724729164!2d105.8542!3d21.0285!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xab80f820cb7b8f91!2siCoderX%20-%20Code%20tool%20bot%20auto%20theo%20y%C3%AAu%20c%E1%BA%A7u!5e0!3m2!1svi!2s!4v1736637200000!5m2!1svi!2s"
+                width="100%"
+                height="450"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="w-full h-[450px]"
+                title="Vị trí iCoderX - Code tool bot auto theo yêu cầu"
+              ></iframe>
+              <div className="absolute top-4 right-4">
+                <a
+                  href="https://www.google.com/maps/place/iCoderX+-+Code+tool+bot+auto+theo+y%C3%AAu+c%E1%BA%A7u/data=!4m2!3m1!1s0x0:0xab80f820cb7b8f91?sa=X&ved=1t:2428&ictx=111"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors shadow-lg"
+                >
+                  <Target className="w-4 h-4 mr-2" />
+                  Xem trên Google Maps
+                </a>
+              </div>
+            </div>
+
+            {/* Location Info - Single Combined Card */}
+            <div className="space-y-6">
+              <Card className="bg-gray-900/90 backdrop-blur-sm border-gray-700 service-card h-[450px] overflow-y-auto">
+                <CardContent className="p-6">
+                  {/* Address Section */}
+                  <div className="mb-8">
+                    <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
+                      <Building className="w-5 h-5 mr-2 text-blue-400" />
+                      Thông Tin Địa Chỉ
+                    </h3>
+                    <div className="space-y-3 text-gray-300">
+                      <div className="flex items-start space-x-3">
+                        <Target className="w-4 h-4 text-blue-400 mt-1" />
+                        <div>
+                          <p className="font-medium">Địa chỉ:</p>
+                          <p>116 Đ. Tả Thanh Oai, Tả Thanh Oai, Thanh Trì, Hà Nội</p>
+                          <p className="text-sm text-gray-400">Mã bưu điện: 100000</p>
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+                        <div className="flex items-start space-x-3">
+                          <Mail className="w-4 h-4 text-blue-400 mt-1" />
+                          <div>
+                            <p className="font-medium">Email:</p>
+                            <a href="mailto:admin@icoderx.vn" className="text-blue-400 hover:text-blue-300 transition-colors">
+                              admin@icoderx.vn
+                            </a>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-start space-x-3">
+                          <TelegramIcon className="w-4 h-4 text-blue-400 mt-1" />
+                          <div>
+                            <p className="font-medium">Telegram:</p>
+                            <a href="https://t.me/iCoderXvn" className="text-blue-400 hover:text-blue-300 transition-colors">
+                              @iCoderXvn
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-start space-x-3 mt-3">
+                        <Facebook className="w-4 h-4 text-blue-400 mt-1" />
+                        <div>
+                          <p className="font-medium">Facebook:</p>
+                          <a href="https://facebook.com/iCoderXvn" className="text-blue-400 hover:text-blue-300 transition-colors">
+                            iCoderXvn
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Divider */}
+                  <div className="border-t border-gray-600 my-6"></div>
+
+                  {/* Working Hours Section */}
+                  <div>
+                    <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
+                      <Settings className="w-5 h-5 mr-2 text-blue-400" />
+                      Giờ Làm Việc
+                    </h3>
+                    <div className="space-y-3 text-gray-300">
+                      <div className="flex justify-between items-center">
+                        <span>Thứ 2 - Thứ 6:</span>
+                        <span className="text-blue-400 font-medium">8:00 - 18:00</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span>Thứ 7:</span>
+                        <span className="text-blue-400 font-medium">9:00 - 17:00</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span>Chủ nhật:</span>
+                        <span className="text-gray-400">Nghỉ</span>
+                      </div>
+                      <div className="mt-4 p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                        <p className="text-sm text-blue-300 flex items-center">
+                          <Zap className="w-4 h-4 mr-2" />
+                          Hỗ trợ 24/7 qua Telegram cho các dự án khẩn cấp
+                        </p>
+                      </div>
+                      
+                      {/* Additional Contact Info */}
+                      <div className="mt-4 p-4 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-lg">
+                        <h4 className="text-sm font-semibold text-purple-300 mb-2">Liên Hệ Nhanh</h4>
+                        <div className="space-y-2 text-sm">
+                          <p className="text-gray-300">📞 Tư vấn miễn phí qua Telegram</p>
+                          <p className="text-gray-300">💬 Phản hồi trong vòng 30 phút</p>
+                          <p className="text-gray-300">🚀 Báo giá dự án trong 24h</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer id="contact" className="w-full border-t border-blue-500/20 bg-black/80" role="contentinfo">
         <div className="container mx-auto px-4 md:px-6 py-12">

@@ -3,9 +3,9 @@ import './globals.css'
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://icoderx.vn'),
-  title: 'iCoderX - Giải Pháp Tự Động Hóa Bot & Phần Mềm Chuyên Nghiệp',
-  description: 'Chuyên gia tự động hóa hàng đầu. Xây dựng bot giao dịch crypto, bot MMO, bot Telegram/Discord và phần mềm tùy chỉnh. 100+ dự án thành công, hỗ trợ 24/7.',
-  keywords: 'bot automation, crypto trading bot, MMO bot, telegram bot, discord bot, web scraping, automation software, vietnam automation',
+  title: 'iCoderX - Lập Trình Bot | Code Bot Theo Yêu Cầu | Viết Bot Web Tự Động | Tool MMO',
+  description: 'Chuyên lập trình bot, code bot theo yêu cầu, viết bot web tự động, tool MMO auto, bot Facebook/Telegram/AI. Dịch vụ viết bot crypto, tool automation, phần mềm tự động hóa, RPA. Thuê code tool auto, bot web scraping, tool auto click. 100+ dự án thành công.',
+  keywords: 'lập trình bot, code bot theo yêu cầu, viết bot web tự động, bot web auto, bot thao tác web, viết bot Facebook, viết bot Telegram, viết bot AI, dịch vụ viết bot, thuê viết bot, thuê người code bot, thuê code tool auto, code tool MMO, tool spam, tool tự động hóa, tool auto click, tool auto scroll, tool auto web, tool fill form tự động, phần mềm auto, phần mềm tự động hóa, phần mềm thao tác web, tool MMO auto, tool kiếm tiền online, dịch vụ viết tool MMO, viết tool auto game, bot auto đăng ký tài khoản, bot đăng nhập website, bot tự động crawl dữ liệu, bot web scraping, tool automation trình duyệt, automation web bằng Puppeteer, automation web bằng Selenium, tool auto captcha, code auto đăng bài Facebook, tool auto comment YouTube, tool tương tác TikTok, tool tăng lượt like Facebook, bot seeding TikTok, code bot Instagram, dịch vụ lập trình theo yêu cầu, code phần mềm theo yêu cầu, phần mềm tùy chỉnh, phần mềm automation theo ngành, RPA robotic process automation, lập trình bot thao tác chuột, lập trình auto click chuột, tool auto thao tác chuột và bàn phím, auto thao tác nhiều tab trình duyệt, tool đa luồng, tool chạy nền, tool giả lập Android, viết bot tự động hóa quy trình doanh nghiệp, bot AI tùy chỉnh GPT, tích hợp API automation, tool lấy dữ liệu sản phẩm Shopee, tool kiểm tra đơn hàng tự động, tool auto báo cáo, lập trình bot AI học sinh, tool chấm điểm tự động, công cụ tự động hóa giáo dục, bot Telegram xử lý yêu cầu khách hàng, bot chăm sóc khách hàng tự động, tool hỗ trợ làm việc nhóm, tool đồng bộ dữ liệu, tool crawl dữ liệu đối thủ, tool báo cáo giá thị trường, bot giao dịch crypto tự động, crypto trading bot, dịch vụ viết bot crypto, dịch vụ lập trình bot MMO, bot auto đăng ký tài khoản email, tool tạo tài khoản hàng loạt, bot tự động hoàn thành captcha, tool auto submit form, dịch vụ tạo tool automation theo yêu cầu, giải pháp tự động hóa phần mềm, thiết kế hệ thống bot chuyên dụng, tool giám sát hệ thống, viết bot AI với ChatGPT hoặc GPT-4, lập trình phần mềm hỗ trợ MMO, tool auto SEO, phần mềm auto marketing Facebook TikTok',
   authors: [{ name: 'iCoderX Team' }],
   creator: 'iCoderX',
   publisher: 'iCoderX',
@@ -39,8 +39,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'vi_VN',
     url: 'https://icoderx.vn',
-    title: 'iCoderX - Giải Pháp Tự Động Hóa Bot & Phần Mềm Chuyên Nghiệp',
-    description: 'Chuyên gia tự động hóa hàng đầu. Xây dựng bot giao dịch crypto, bot MMO, bot Telegram/Discord và phần mềm tùy chỉnh. 100+ dự án thành công, hỗ trợ 24/7.',
+    title: 'iCoderX - Lập Trình Bot | Code Bot Theo Yêu Cầu | Viết Bot Web Tự Động | Tool MMO',
+    description: 'Chuyên lập trình bot, code bot theo yêu cầu, viết bot web tự động, tool MMO auto, bot Facebook/Telegram/AI. Dịch vụ viết bot crypto, tool automation, phần mềm tự động hóa, RPA. Thuê code tool auto, bot web scraping.',
     siteName: 'iCoderX',
     images: [
       {
@@ -53,8 +53,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'iCoderX - Giải Pháp Tự Động Hóa Bot & Phần Mềm Chuyên Nghiệp',
-    description: 'Chuyên gia tự động hóa hàng đầu. Xây dựng bot giao dịch crypto, bot MMO, bot Telegram/Discord và phần mềm tùy chỉnh.',
+    title: 'iCoderX - Lập Trình Bot | Code Bot Theo Yêu Cầu | Viết Bot Web Tự Động | Tool MMO',
+    description: 'Chuyên lập trình bot, code bot theo yêu cầu, viết bot web tự động, tool MMO auto, bot Facebook/Telegram/AI. Dịch vụ viết bot crypto, tool automation, phần mềm tự động hóa.',
     images: ['/og-image.jpg'],
     creator: '@iCoderXvn',
   },
@@ -93,7 +93,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               "name": "iCoderX",
-              "description": "Chuyên gia tự động hóa bot và phần mềm chuyên nghiệp",
+              "description": "Chuyên lập trình bot, code bot theo yêu cầu, viết bot web tự động, tool MMO auto, dịch vụ viết bot Facebook/Telegram/AI, tool automation, phần mềm tự động hóa chuyên nghiệp",
               "url": "https://icoderx.vn",
               "logo": "https://icoderx.vn/favicon.ico",
               "contactPoint": {
@@ -109,6 +109,12 @@ export default function RootLayout({
                 "postalCode": "100000",
                 "streetAddress": "Dai Thanh"
               },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": "21.0285",
+                "longitude": "105.8542"
+              },
+              "hasMap": "https://g.co/kgs/ws8H3hW",
               "sameAs": [
                 "https://t.me/iCoderXvn",
                 "https://youtube.com/@iCoderXvn",
@@ -118,7 +124,7 @@ export default function RootLayout({
               "offers": {
                 "@type": "Offer",
                 "category": "Software Development",
-                "description": "Bot automation services including crypto trading bots, MMO bots, and custom software solutions"
+                "description": "Lập trình bot, code bot theo yêu cầu, viết bot web tự động, tool MMO auto, bot Facebook/Telegram/AI, dịch vụ viết bot crypto, tool automation, phần mềm tự động hóa, RPA, bot web scraping, tool auto click, phần mềm thao tác web, automation web bằng Puppeteer/Selenium"
               }
             })
           }}
