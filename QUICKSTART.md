@@ -61,7 +61,7 @@ theme: {
 
 ### Replace Images
 Update files in `/public/`:
-- `logo.png` - Your logo
+- `favicon.ico` - Your logo
 - `client.png` - Client photos
 - `trading.png` - Service images
 

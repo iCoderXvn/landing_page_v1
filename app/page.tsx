@@ -56,7 +56,7 @@ export default function HomePage() {
         <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
           <Link href="#home" className="flex items-center space-x-3">
             <Image
-              src="/logo.png"
+              src="/favicon.ico"
               alt="iCoderX Logo - Automation Solutions"
               width={40}
               height={40}
@@ -651,7 +651,7 @@ export default function HomePage() {
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <Image
-                  src="/logo.png"
+                  src="/favicon.ico"
                   alt="iCoderX Logo - Automation Solutions"
                   width={40}
                   height={40}

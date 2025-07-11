@@ -71,7 +71,7 @@ This comprehensive guide documents all formatting features available in the iCod
 - **Prompts**: 
   1. Image URL
   2. Alt text (optional)
-- **Example**: `![Logo](https://example.com/logo.png)`
+- **Example**: `![Logo](https://example.com/favicon.ico)`
 
 #### Regular Links
 - **Syntax**: `[link text](url)`

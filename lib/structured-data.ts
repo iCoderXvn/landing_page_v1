@@ -7,7 +7,7 @@ export const serviceSchema = {
   "provider": {
     "@type": "Organization",
     "name": "iCoderX",
-    "url": "https://icoderx.dev"
+    "url": "https://icoderx.vn"
   },
   "areaServed": {
     "@type": "Country",
@@ -58,8 +58,8 @@ export const organizationSchema = {
   "@type": "Organization",
   "name": "iCoderX",
   "alternateName": "iCoderX Automation",
-  "url": "https://icoderx.dev",
-  "logo": "https://icoderx.dev/logo.png",
+  "url": "https://icoderx.vn",
+  "logo": "https://icoderx.vn/favicon.ico",
   "description": "Leading automation experts specializing in bot development, crypto trading automation, and custom software solutions",
   "foundingDate": "2020",
   "founders": [
@@ -73,7 +73,7 @@ export const organizationSchema = {
       "@type": "ContactPoint",
       "telephone": "+84-xxx-xxx-xxx",
       "contactType": "customer service",
-      "email": "hello@icoderx.dev",
+      "email": "hello@icoderx.vn",
       "availableLanguage": ["Vietnamese", "English"]
     }
   ],
@@ -105,7 +105,7 @@ export const websiteSchema = {
   "@type": "WebSite",
   "name": "iCoderX - Automation Solutions",
   "alternateName": "iCoderX",
-  "url": "https://icoderx.dev",
+  "url": "https://icoderx.vn",
   "description": "Professional automation services including bot development, crypto trading bots, MMO automation, and custom software solutions",
   "publisher": {
     "@type": "Organization",
@@ -115,7 +115,7 @@ export const websiteSchema = {
     "@type": "SearchAction",
     "target": {
       "@type": "EntryPoint",
-      "urlTemplate": "https://icoderx.dev/search?q={search_term_string}"
+      "urlTemplate": "https://icoderx.vn/search?q={search_term_string}"
     },
     "query-input": "required name=search_term_string"
   }

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://icoderx.vn'),
   title: 'iCoderX - Giải Pháp Tự Động Hóa Bot & Phần Mềm Chuyên Nghiệp',
   description: 'Chuyên gia tự động hóa hàng đầu. Xây dựng bot giao dịch crypto, bot MMO, bot Telegram/Discord và phần mềm tùy chỉnh. 100+ dự án thành công, hỗ trợ 24/7.',
   keywords: 'bot automation, crypto trading bot, MMO bot, telegram bot, discord bot, web scraping, automation software, vietnam automation',
@@ -10,16 +11,16 @@ export const metadata: Metadata = {
   publisher: 'iCoderX',
   icons: {
     icon: [
-      { url: '/logo.png', sizes: '32x32', type: 'image/png' },
-      { url: '/logo.png', sizes: '16x16', type: 'image/png' },
-      { url: '/logo.png', sizes: '48x48', type: 'image/png' },
+      { url: '/favicon.ico', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.ico', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon.ico', sizes: '48x48', type: 'image/png' },
     ],
-    shortcut: '/logo.png',
-    apple: '/logo.png',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
     other: [
       {
         rel: 'icon',
-        url: '/logo.png',
+        url: '/favicon.ico',
       },
     ],
   },
@@ -37,7 +38,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'vi_VN',
-    url: 'https://icoderx.dev',
+    url: 'https://icoderx.vn',
     title: 'iCoderX - Giải Pháp Tự Động Hóa Bot & Phần Mềm Chuyên Nghiệp',
     description: 'Chuyên gia tự động hóa hàng đầu. Xây dựng bot giao dịch crypto, bot MMO, bot Telegram/Discord và phần mềm tùy chỉnh. 100+ dự án thành công, hỗ trợ 24/7.',
     siteName: 'iCoderX',
@@ -63,10 +64,10 @@ export const metadata: Metadata = {
     // yahoo: 'your-yahoo-verification-code',
   },
   alternates: {
-    canonical: 'https://icoderx.dev',
+    canonical: 'https://icoderx.vn',
     languages: {
-      'vi-VN': 'https://icoderx.dev',
-      'en-US': 'https://icoderx.dev/en',
+      'vi-VN': 'https://icoderx.vn',
+      'en-US': 'https://icoderx.vn/en',
     },
   },
 }
@@ -79,9 +80,10 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <head>
-        <link rel="canonical" href="https://icoderx.dev" />
-        <link rel="alternate" hrefLang="vi" href="https://icoderx.dev" />
-        <link rel="alternate" hrefLang="en" href="https://icoderx.dev/en" />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="canonical" href="https://icoderx.vn" />
+        <link rel="alternate" hrefLang="vi" href="https://icoderx.vn" />
+        <link rel="alternate" hrefLang="en" href="https://icoderx.vn/en" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#0072ff" />
         <script
@@ -92,13 +94,13 @@ export default function RootLayout({
               "@type": "Organization",
               "name": "iCoderX",
               "description": "Chuyên gia tự động hóa bot và phần mềm chuyên nghiệp",
-              "url": "https://icoderx.dev",
-              "logo": "https://icoderx.dev/logo.png",
+              "url": "https://icoderx.vn",
+              "logo": "https://icoderx.vn/favicon.ico",
               "contactPoint": {
                 "@type": "ContactPoint",
                 "telephone": "+84-xxx-xxx-xxx",
                 "contactType": "customer service",
-                "email": "hello@icoderx.dev"
+                "email": "hello@icoderx.vn"
               },
               "address": {
                 "@type": "PostalAddress",

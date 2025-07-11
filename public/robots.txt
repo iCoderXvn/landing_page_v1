@@ -15,12 +15,12 @@ Allow: /
 User-agent: DuckDuckBot
 Allow: /
 
-# Block specific paths if needed
-# Disallow: /admin/
-# Disallow: /private/
+# Block admin area from search engines
+Disallow: /admin/
+Disallow: /api/
 
 # Sitemap location
-Sitemap: https://icoderx.dev/sitemap.xml
+Sitemap: https://icoderx.vn/sitemap.xml
 
 # Crawl delay (optional)
 Crawl-delay: 1

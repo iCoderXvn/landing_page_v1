@@ -1,9 +1,24 @@
 import { MetadataRoute } from 'next'
- 
+import { postOperations } from '@/lib/database'
+
+interface Post {
+  id: number
+  title: string
+  content: string
+  isPublished: boolean
+  createdAt: Date
+  updatedAt?: Date
+  topicId?: number
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://icoderx.dev'
+  const baseUrl = 'https://icoderx.vn'
   
-  return [
+  // Get all published posts for dynamic blog URLs
+  const publishedPosts: Post[] = postOperations.getAll().filter((post: Post) => post.isPublished)
+  
+  // Static pages
+  const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
       lastModified: new Date(),
@@ -11,70 +26,32 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: `${baseUrl}/services`,
+      url: `${baseUrl}/blog`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/services/trading-bots`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/services/mmo-automation`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/services/discord-bots`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/services/custom-software`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'daily',
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/portfolio`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.6,
-    },
-    {
       url: `${baseUrl}/contact`,
       lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.7,
+      changeFrequency: 'monthly',
+      priority: 0.8,
     },
     {
-      url: `${baseUrl}/privacy`,
+      url: `${baseUrl}/admin`,
       lastModified: new Date(),
       changeFrequency: 'yearly',
-      priority: 0.3,
-    },
-    {
-      url: `${baseUrl}/terms`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.3,
+      priority: 0.1,
     },
   ]
+  
+  // Dynamic blog post pages
+  const blogPosts: MetadataRoute.Sitemap = publishedPosts.map((post: Post) => ({
+    url: `${baseUrl}/blog/${post.id}`,
+    lastModified: new Date(post.updatedAt || post.createdAt),
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }))
+  
+  return [...staticPages, ...blogPosts]
 }

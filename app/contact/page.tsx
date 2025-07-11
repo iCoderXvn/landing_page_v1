@@ -40,7 +40,7 @@ export default function ContactPage() {
         <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
           <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
             <Image
-              src="/logo.png"
+              src="/favicon.ico"
               alt="iCoderX Logo - Automation Solutions"
               width={40}
               height={40}

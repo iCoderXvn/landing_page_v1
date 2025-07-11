@@ -202,7 +202,7 @@ Update the content in `app/page.tsx`:
 
 Replace images in the `public/` folder:
 
-- `logo.png` - Your company logo
+- `favicon.ico` - Your company logo
 - `client.png` - Client testimonial photos
 - `trading.png` - Service showcase images
 - `mmo.png` - Service showcase images

@@ -12,11 +12,11 @@
 ### 2. Favicon Set
 - **Files**: 
   - `/public/favicon.svg` (vector, preferred)
-  - `/public/favicon.png` (32x32px fallback)
+  - `/public/favicon.ico` (32x32px fallback)
   - `/public/favicon.ico` (legacy support)
 
 ### 3. Logo Files
-- **File**: `/public/logo.png`
+- **File**: `/public/favicon.ico`
 - **Dimensions**: 512x512px
 - **Format**: WebP with PNG fallback
 - **Background**: Transparent
