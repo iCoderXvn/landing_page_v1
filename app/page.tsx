@@ -738,7 +738,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex items-center space-x-2">
                   <TelegramIcon className="h-4 w-4" aria-hidden="true" />
-                  <a href="https://t.me/iCoderX_Official" className="hover:text-blue-400 transition-colors">iCoderXvn</a>
+                  <a href="https://t.me/iCoderXvn" className="hover:text-blue-400 transition-colors">iCoderXvn</a>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Youtube className="h-4 w-4" aria-hidden="true" />

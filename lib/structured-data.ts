@@ -73,7 +73,7 @@ export const organizationSchema = {
       "@type": "ContactPoint",
       "telephone": "+84-xxx-xxx-xxx",
       "contactType": "customer service",
-      "email": "hello@icoderx.vn",
+      "email": "admin@icoderx.vn",
       "availableLanguage": ["Vietnamese", "English"]
     }
   ],
@@ -83,10 +83,10 @@ export const organizationSchema = {
     "addressLocality": "Ho Chi Minh City"
   },
   "sameAs": [
-    "https://t.me/iCoderX_Official",
-    "https://youtube.com/icoderx", 
-    "https://facebook.com/icoderx",
-    "https://twitter.com/iCoderX_Official"
+    "https://t.me/iCoderXvn",
+    "https://youtube.com/@iCoderXvn", 
+    "https://facebook.com/iCoderXvn",
+    "https://twitter.com/iCoderXvn"
   ],
   "knowsAbout": [
     "Bot Development",

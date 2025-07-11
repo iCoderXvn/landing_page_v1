@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     title: 'iCoderX - Giải Pháp Tự Động Hóa Bot & Phần Mềm Chuyên Nghiệp',
     description: 'Chuyên gia tự động hóa hàng đầu. Xây dựng bot giao dịch crypto, bot MMO, bot Telegram/Discord và phần mềm tùy chỉnh.',
     images: ['/og-image.jpg'],
-    creator: '@iCoderX_Official',
+    creator: '@iCoderXvn',
   },
   verification: {
     google: 'your-google-verification-code',
@@ -98,20 +98,22 @@ export default function RootLayout({
               "logo": "https://icoderx.vn/favicon.ico",
               "contactPoint": {
                 "@type": "ContactPoint",
-                "telephone": "+84-xxx-xxx-xxx",
+                "telephone": "+84-877-484-888",
                 "contactType": "customer service",
-                "email": "hello@icoderx.vn"
+                "email": "admin@icoderx.vn"
               },
               "address": {
                 "@type": "PostalAddress",
                 "addressCountry": "VN",
-                "addressLocality": "Ho Chi Minh City"
+                "addressLocality": "Ha Noi Capital",
+                "postalCode": "100000",
+                "streetAddress": "Dai Thanh"
               },
               "sameAs": [
-                "https://t.me/iCoderX_Official",
-                "https://youtube.com/icoderx",
-                "https://facebook.com/icoderx",
-                "https://twitter.com/iCoderX_Official"
+                "https://t.me/iCoderXvn",
+                "https://youtube.com/@iCoderXvn",
+                "https://facebook.com/iCoderXvn",
+                "https://twitter.com/iCoderXvn"
               ],
               "offers": {
                 "@type": "Offer",
