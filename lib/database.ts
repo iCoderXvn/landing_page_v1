@@ -261,8 +261,7 @@ const generateSlugsForExistingPosts = () => {
   }
 };
 
-// Initialize slugs for existing posts
-generateSlugsForExistingPosts();
+// Initialize slugs for existing posts will be called at the end of this file
 
 // User operations
 export const userOperations = {
@@ -1176,6 +1175,9 @@ const initializeDefaultSettings = () => {
 
 // Initialize default settings
 initializeDefaultSettings();
+
+// Initialize slugs for existing posts (after all migrations and setup)
+generateSlugsForExistingPosts();
 
 export default db;
 
