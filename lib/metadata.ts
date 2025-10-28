@@ -10,7 +10,7 @@ export function generateMetadata(): Metadata {
   return {
     metadataBase: new URL(settings.siteUrl || 'https://icoderx.vn'),
     title: settings.siteTitle || settings.siteName || 'iCoderX',
-    description: settings.siteDescription || settings.defaultMetaDescription,
+    description: settings.defaultMetaDescription || settings.siteDescription,
     keywords: settings.defaultKeywords,
     authors: [{ name: `${settings.siteName} Team` }],
     creator: settings.siteName,
@@ -46,7 +46,7 @@ export function generateMetadata(): Metadata {
       locale: 'vi_VN',
       url: settings.siteUrl,
       title: settings.siteName,
-      description: settings.siteDescription || settings.defaultMetaDescription,
+      description: settings.defaultMetaDescription || settings.siteDescription,
       siteName: settings.siteName,
       images: [
         {
@@ -60,7 +60,7 @@ export function generateMetadata(): Metadata {
     twitter: {
       card: 'summary_large_image',
       title: settings.siteName,
-      description: settings.siteDescription || settings.defaultMetaDescription,
+      description: settings.defaultMetaDescription || settings.siteDescription,
       images: ['/og-image.jpg'],
       creator: settings.twitterUrl ? `@${settings.twitterUrl.split('/').pop()}` : '@iCoderXvn',
     },
@@ -87,7 +87,7 @@ export function generateStructuredData() {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": settings.siteName,
-    "description": settings.siteDescription || settings.defaultMetaDescription,
+    "description": settings.defaultMetaDescription || settings.siteDescription,
     "url": settings.siteUrl,
     "logo": `${settings.siteUrl}/favicon.ico`,
     "contactPoint": {

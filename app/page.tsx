@@ -41,9 +41,9 @@ const TelegramIcon = ({ className }: { className?: string }) => (
   </svg>
 )
 
-export default async function HomePage() {
+export default function HomePage() {
   // Fetch settings directly from database on server
-  const settings = await getSiteSettings()
+  const settings = getSiteSettings()
 
   return (
     <div className="flex flex-col min-h-screen relative w-full overflow-x-hidden">

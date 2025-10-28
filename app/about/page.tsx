@@ -1,9 +1,14 @@
 import { Metadata } from 'next'
 import { getSiteSettings } from '@/lib/settings'
 
-export const metadata: Metadata = {
-  title: 'About Us',
-  description: 'Learn more about our company and what we do',
+export function generateMetadata(): Metadata {
+  const settings = getSiteSettings()
+  
+  return {
+    title: `About Us | ${settings.siteName}`,
+    description: settings.defaultMetaDescription || 'Learn more about our company and what we do',
+    keywords: settings.defaultKeywords,
+  }
 }
 
 export default function AboutPage() {

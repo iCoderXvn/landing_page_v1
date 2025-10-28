@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const resolvedParams = await params;
   const { id } = resolvedParams;
-  const settings = await getSiteSettings();
+  const settings = getSiteSettings();
   
   let post;
   if (/^\d+$/.test(id)) {
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   
   const title = `${post.title} | ${settings.siteTitle || settings.siteName}`;
   const description = post.metaDescription || post.excerpt || post.content.substring(0, 155);
-  const keywords = post.keywords || "";
+  const keywords = post.keywords || settings.defaultKeywords;
   const url = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/blog/${post.slug || id}`;
   
   return {
@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   };
 }
 
-export default async function BlogPostPage({ params }: { params: { id: string } }) {
-  const settings = await getSiteSettings();
+export default function BlogPostPage({ params }: { params: { id: string } }) {
+  const settings = getSiteSettings();
   return <BlogDetailClient settings={settings} postId={params.id} />;
 }
