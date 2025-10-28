@@ -71,6 +71,7 @@ try {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       key TEXT UNIQUE NOT NULL,
       value TEXT,
+      category TEXT,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
   `);

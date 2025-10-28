@@ -38,14 +38,26 @@ try {
     { name: 'updated_at', type: 'DATETIME DEFAULT CURRENT_TIMESTAMP' }
   ];
 
-  // Add missing columns
+  // Add missing columns to posts table
   for (const column of requiredColumns) {
     if (!existingColumns.includes(column.name)) {
-      console.log(`✅ Adding column: ${column.name}`);
+      console.log(`✅ Adding column to posts: ${column.name}`);
       db.exec(`ALTER TABLE posts ADD COLUMN ${column.name} ${column.type}`);
     } else {
       console.log(`⏭️  Column ${column.name} already exists`);
     }
+  }
+
+  // Check and fix settings table
+  console.log('\n🔧 Checking settings table...');
+  const settingsTableInfo = db.prepare("PRAGMA table_info(settings)").all();
+  const settingsColumns = settingsTableInfo.map(col => col.name);
+  
+  if (!settingsColumns.includes('category')) {
+    console.log('✅ Adding category column to settings table');
+    db.exec('ALTER TABLE settings ADD COLUMN category TEXT');
+  } else {
+    console.log('⏭️  Settings table already has category column');
   }
 
   // Generate slugs for existing posts
