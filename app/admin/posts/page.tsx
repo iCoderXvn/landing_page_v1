@@ -82,9 +82,17 @@ export default function PostsManagementPage() {
   const fetchData = async () => {
     setLoading(true);
     try {
+      const authToken = localStorage.getItem('authToken');
+      const requestInit: RequestInit = authToken ? {
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json'
+        }
+      } : {};
+
       const [postsRes, topicsRes] = await Promise.all([
-        fetch('/api/posts'),
-        fetch('/api/topics')
+        fetch('/api/posts', requestInit),
+        fetch('/api/topics', requestInit)
       ]);
       
       const [postsData, topicsData] = await Promise.all([
@@ -176,10 +184,16 @@ export default function PostsManagementPage() {
     
     setLoading(true);
     try {
+      const authToken = localStorage.getItem('authToken');
+      
       await Promise.all(
-        Array.from(selectedPosts).map(id =>
-          fetch(`/api/posts/${id}`, { method: 'DELETE' })
-        )
+        Array.from(selectedPosts).map(id => {
+          const requestInit: RequestInit = { method: 'DELETE' };
+          if (authToken) {
+            requestInit.headers = { 'Authorization': `Bearer ${authToken}` };
+          }
+          return fetch(`/api/posts/${id}`, requestInit);
+        })
       );
       setSelectedPosts(new Set());
       await fetchData();
@@ -196,10 +210,16 @@ export default function PostsManagementPage() {
     
     setLoading(true);
     try {
+      const authToken = localStorage.getItem('authToken');
+      
       await Promise.all(
-        Array.from(selectedPosts).map(id =>
-          fetch(`/api/posts/${id}`, { method: 'PATCH' })
-        )
+        Array.from(selectedPosts).map(id => {
+          const requestInit: RequestInit = { method: 'PATCH' };
+          if (authToken) {
+            requestInit.headers = { 'Authorization': `Bearer ${authToken}` };
+          }
+          return fetch(`/api/posts/${id}`, requestInit);
+        })
       );
       setSelectedPosts(new Set());
       await fetchData();
@@ -217,7 +237,13 @@ export default function PostsManagementPage() {
     
     setLoading(true);
     try {
-      const response = await fetch(`/api/posts/${id}`, { method: 'DELETE' });
+      const authToken = localStorage.getItem('authToken');
+      const response = await fetch(`/api/posts/${id}`, { 
+        method: 'DELETE',
+        headers: authToken ? {
+          'Authorization': `Bearer ${authToken}`
+        } : {}
+      });
       if (response.ok) {
         await fetchData();
       } else {
@@ -234,7 +260,13 @@ export default function PostsManagementPage() {
   const handleTogglePublish = async (id: number) => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/posts/${id}`, { method: 'PATCH' });
+      const authToken = localStorage.getItem('authToken');
+      const response = await fetch(`/api/posts/${id}`, { 
+        method: 'PATCH',
+        headers: authToken ? {
+          'Authorization': `Bearer ${authToken}`
+        } : {}
+      });
       if (response.ok) {
         await fetchData();
       } else {

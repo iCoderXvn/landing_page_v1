@@ -227,6 +227,11 @@ createDefaultTopics();
 // Generate slugs for existing posts that don't have them
 const generateSlugsForExistingPosts = () => {
   try {
+    // Only run during runtime, not during build
+    if (process.env.NODE_ENV === 'production' && process.env.NEXT_PHASE === 'phase-production-build') {
+      return;
+    }
+    
     // Check if slug column exists first
     const tableInfo = db.prepare("PRAGMA table_info(posts)").all();
     const hasSlug = tableInfo.some((col: any) => col.name === 'slug');
@@ -478,6 +483,7 @@ export const postOperations = {
 
   // Get all posts with topic information
   getAll: () => {
+    ensureSlugsInitialized();
     return db.prepare(`
       SELECT p.*, t.name as topic_name, t.description as topic_description
       FROM posts p
@@ -488,6 +494,7 @@ export const postOperations = {
 
   // Get published posts with topic information
   getPublished: () => {
+    ensureSlugsInitialized();
     return db.prepare(`
       SELECT p.*, t.name as topic_name, t.description as topic_description
       FROM posts p
@@ -1176,8 +1183,14 @@ const initializeDefaultSettings = () => {
 // Initialize default settings
 initializeDefaultSettings();
 
-// Initialize slugs for existing posts (after all migrations and setup)
-generateSlugsForExistingPosts();
+// Initialize slugs for existing posts (only when accessed at runtime)
+let slugsInitialized = false;
+const ensureSlugsInitialized = () => {
+  if (!slugsInitialized) {
+    generateSlugsForExistingPosts();
+    slugsInitialized = true;
+  }
+};
 
 export default db;
 

@@ -105,7 +105,12 @@ export default function EditPostPage() {
 
   const fetchTopics = async () => {
     try {
-      const response = await fetch("/api/topics");
+      const authToken = localStorage.getItem('authToken');
+      const response = await fetch("/api/topics", {
+        headers: authToken ? {
+          'Authorization': `Bearer ${authToken}`
+        } : {}
+      });
       const data = await response.json();
       if (data.success) {
         setTopics(data.topics);
@@ -118,7 +123,12 @@ export default function EditPostPage() {
   const fetchPost = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/posts/${postId}`);
+      const authToken = localStorage.getItem('authToken');
+      const response = await fetch(`/api/posts/${postId}`, {
+        headers: authToken ? {
+          'Authorization': `Bearer ${authToken}`
+        } : {}
+      });
       const data = await response.json();
       
       if (data.success && data.post) {
@@ -241,9 +251,13 @@ export default function EditPostPage() {
     setSaveStatus("saving");
     
     try {
+      const authToken = localStorage.getItem('authToken');
       const response = await fetch(`/api/posts/${postId}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          ...(authToken && { "Authorization": `Bearer ${authToken}` })
+        },
         body: JSON.stringify({
           ...formData,
           topicId: formData.topicId ? parseInt(formData.topicId) : null,

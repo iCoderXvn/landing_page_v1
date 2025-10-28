@@ -59,6 +59,7 @@ export default function NewPostPage() {
   const [saving, setSaving] = useState(false);
   const [saveStatus, setSaveStatus] = useState<"saved" | "saving" | "unsaved" | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [draftLoaded, setDraftLoaded] = useState(false);
   const autoSaveTimeout = useRef<NodeJS.Timeout>();
   
   const [formData, setFormData] = useState<PostFormData>({
@@ -104,7 +105,12 @@ export default function NewPostPage() {
 
   const fetchTopics = async () => {
     try {
-      const response = await fetch("/api/topics");
+      const authToken = localStorage.getItem('authToken');
+      const response = await fetch("/api/topics", {
+        headers: authToken ? {
+          'Authorization': `Bearer ${authToken}`
+        } : {}
+      });
       const data = await response.json();
       if (data.success) {
         setTopics(data.topics);
@@ -121,6 +127,7 @@ export default function NewPostPage() {
         const parsed = JSON.parse(draft);
         setFormData(parsed);
         setSaveStatus("saved");
+        setDraftLoaded(true);
       } catch (error) {
         console.error("Error loading draft:", error);
       }
@@ -136,6 +143,23 @@ export default function NewPostPage() {
   const clearDraft = () => {
     localStorage.removeItem("postDraft");
     setSaveStatus(null);
+    setDraftLoaded(false);
+  };
+
+  const startFresh = () => {
+    setFormData({
+      title: "",
+      content: "",
+      slug: "",
+      excerpt: "",
+      metaDescription: "",
+      keywords: "",
+      topicId: "",
+      featuredImage: "",
+      isPublished: false,
+      scheduledAt: "",
+    });
+    clearDraft();
   };
 
   const handleChange = (field: keyof PostFormData, value: string | boolean) => {
@@ -238,9 +262,13 @@ export default function NewPostPage() {
 
     setSaving(true);
     try {
+      const authToken = localStorage.getItem('authToken');
       const response = await fetch("/api/posts", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          ...(authToken && { "Authorization": `Bearer ${authToken}` })
+        },
         body: JSON.stringify({
           ...formData,
           isPublished: publish,
@@ -299,8 +327,18 @@ export default function NewPostPage() {
                       {saveStatus === "saved" && (
                         <span className="text-sm text-green-400 flex items-center gap-1">
                           <CheckCircle className="w-3 h-3" />
-                          Draft saved
+                          {draftLoaded ? "Draft loaded" : "Draft saved"}
                         </span>
+                      )}
+                      {draftLoaded && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={startFresh}
+                          className="text-xs text-gray-400 hover:text-white ml-2"
+                        >
+                          Start Fresh
+                        </Button>
                       )}
                       {saveStatus === "unsaved" && (
                         <span className="text-sm text-gray-400">Unsaved changes</span>
