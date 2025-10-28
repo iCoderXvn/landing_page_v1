@@ -1,7 +1,7 @@
 const Database = require('better-sqlite3');
 const path = require('path');
 
-const dbPath = path.join(__dirname, 'data/blog.db');
+const dbPath = path.join(__dirname, 'data/admin.db');
 const db = new Database(dbPath);
 
 console.log('🔧 Starting database migration...');
@@ -16,8 +16,8 @@ try {
     console.log('\n📋 Please backup your current database and run this command to recreate it:');
     console.log('   cd /root/landing_page_v1');
     console.log('   pm2 stop icoderx');
-    console.log('   cp data/blog.db data/blog.db.backup');
-    console.log('   rm data/blog.db');
+    console.log('   cp data/admin.db data/admin.db.backup');
+    console.log('   rm data/admin.db');
     console.log('   pm2 start icoderx');
     console.log('\n⚠️  WARNING: This will delete all existing data!\n');
     process.exit(1);
