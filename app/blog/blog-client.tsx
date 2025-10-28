@@ -29,6 +29,8 @@ interface Post {
   isPublished: boolean;
   topicId: number | null;
   topic?: Topic;
+  excerpt?: string;
+  featuredImage?: string;
 }
 
 interface BlogPageClientProps {
@@ -360,34 +362,25 @@ export function BlogPageClient({ settings }: BlogPageClientProps) {
                   <div className="grid md:grid-cols-5 gap-6 bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden hover:border-gray-700 transition-all duration-300">
                     {/* Image/Video Preview */}
                     <div className="md:col-span-3 relative h-64 md:h-[400px] bg-gradient-to-br from-blue-900/20 to-purple-900/20 overflow-hidden">
-                      {(() => {
-                        const media = getFirstMedia(filteredPosts[0].content);
-                        if (media) {
-                          return (
-                            <div className="relative w-full h-full">
-                              <Image
-                                src={media.url}
-                                alt={filteredPosts[0].title}
-                                fill
-                                className="object-cover transition-transform duration-700 group-hover:scale-105"
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                              {media.type === 'video' && (
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                  <div className="bg-white/10 backdrop-blur-sm rounded-full p-6 border border-white/20">
-                                    <Play className="w-12 h-12 text-white" fill="white" />
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          );
-                        }
-                        return (
-                          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
-                            <Zap className="w-20 h-20 text-gray-700" />
-                          </div>
-                        );
-                      })()}
+                      {filteredPosts[0].featuredImage && filteredPosts[0].featuredImage.trim() !== '' ? (
+                        <div className="relative w-full h-full">
+                          <Image
+                            src={filteredPosts[0].featuredImage}
+                            alt={filteredPosts[0].title}
+                            fill
+                            className="object-cover transition-transform duration-700 group-hover:scale-105"
+                            onError={(e) => {
+                              console.error('Failed to load image:', filteredPosts[0].featuredImage);
+                              e.currentTarget.style.display = 'none';
+                            }}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                        </div>
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
+                          <Zap className="w-20 h-20 text-gray-700" />
+                        </div>
+                      )}
                     </div>
 
                     {/* Content */}
@@ -408,7 +401,7 @@ export function BlogPageClient({ settings }: BlogPageClientProps) {
                       </h2>
                       
                       <p className="text-gray-400 text-lg mb-6 leading-relaxed line-clamp-3">
-                        {getExcerpt(filteredPosts[0].content, 200)}
+                        {filteredPosts[0].excerpt || getExcerpt(filteredPosts[0].content, 200)}
                       </p>
                       
                       <div className="flex items-center gap-4 text-sm text-gray-500">
@@ -439,34 +432,25 @@ export function BlogPageClient({ settings }: BlogPageClientProps) {
                   <article className="group cursor-pointer h-full flex flex-col bg-gray-900/30 border border-gray-800/50 rounded-xl overflow-hidden hover:border-gray-700 hover:bg-gray-900/50 transition-all duration-300">
                     {/* Image/Video Preview */}
                     <div className="relative h-56 bg-gradient-to-br from-blue-900/20 to-purple-900/20 overflow-hidden">
-                      {(() => {
-                        const media = getFirstMedia(post.content);
-                        if (media) {
-                          return (
-                            <div className="relative w-full h-full">
-                              <Image
-                                src={media.url}
-                                alt={post.title}
-                                fill
-                                className="object-cover transition-transform duration-500 group-hover:scale-105"
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                              {media.type === 'video' && (
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                  <div className="bg-white/10 backdrop-blur-sm rounded-full p-4 border border-white/20 transform group-hover:scale-110 transition-transform duration-300">
-                                    <Play className="w-8 h-8 text-white" fill="white" />
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          );
-                        }
-                        return (
-                          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
-                            <Zap className="w-16 h-16 text-gray-700" />
-                          </div>
-                        );
-                      })()}
+                      {post.featuredImage && post.featuredImage.trim() !== '' ? (
+                        <div className="relative w-full h-full">
+                          <Image
+                            src={post.featuredImage}
+                            alt={post.title}
+                            fill
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                            onError={(e) => {
+                              console.error('Failed to load image:', post.featuredImage);
+                              e.currentTarget.style.display = 'none';
+                            }}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        </div>
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
+                          <Zap className="w-16 h-16 text-gray-700" />
+                        </div>
+                      )}
                     </div>
 
                     {/* Content */}
@@ -482,7 +466,7 @@ export function BlogPageClient({ settings }: BlogPageClientProps) {
                       </h3>
 
                       <p className="text-gray-400 text-sm mb-4 leading-relaxed line-clamp-3 flex-1">
-                        {getExcerpt(post.content, 120)}
+                        {post.excerpt || getExcerpt(post.content, 120)}
                       </p>
 
                       <div className="flex items-center gap-4 text-xs text-gray-500 pt-4 border-t border-gray-800/50">

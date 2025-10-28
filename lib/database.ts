@@ -495,22 +495,7 @@ export const postOperations = {
       LEFT JOIN topics t ON p.topic_id = t.id
       WHERE p.is_published = 1
       ORDER BY p.created_at DESC
-    `).all().map((post: any) => ({
-      id: post.id,
-      title: post.title,
-      content: post.content,
-      slug: post.slug,
-      viewCount: post.view_count || 0,
-      createdAt: new Date(post.created_at),
-      isPublished: Boolean(post.is_published),
-      topicId: post.topic_id,
-      topic: post.topic_name ? {
-        id: post.topic_id,
-        name: post.topic_name,
-        description: post.topic_description,
-        createdAt: new Date()
-      } : null
-    }));
+    `).all().map(mapPostFromDB);
   },
 
   // Get published posts sorted by view count (most visited)
