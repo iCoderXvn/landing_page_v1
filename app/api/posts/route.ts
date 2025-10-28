@@ -61,6 +61,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Validate topic ID if provided
+    if (topicId) {
+      const { topicOperations } = await import('@/lib/database');
+      const topic = topicOperations.getById(topicId);
+      if (!topic) {
+        return NextResponse.json(
+          { success: false, error: `Topic with ID ${topicId} does not exist` },
+          { status: 400 }
+        );
+      }
+    }
+
+    const { postOperations } = await import('@/lib/database');
+
     const postId = postOperations.create(
       title, 
       content, 
@@ -73,6 +87,7 @@ export async function POST(request: NextRequest) {
       slug,
       scheduledAt
     );
+    
     const newPost = postOperations.getById(Number(postId));
 
     return NextResponse.json({ 

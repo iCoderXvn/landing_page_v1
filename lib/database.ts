@@ -345,6 +345,18 @@ export const userOperations = {
 
 // Topic operations
 export const topicOperations = {
+  // Get topic by ID
+  getById: (id: number) => {
+    const topic = db.prepare('SELECT * FROM topics WHERE id = ?').get(id) as any;
+    if (topic) {
+      return {
+        ...topic,
+        createdAt: new Date(topic.created_at)
+      };
+    }
+    return null;
+  },
+
   // Create topic
   create: (name: string, description?: string, color?: string) => {
     try {
@@ -455,30 +467,36 @@ export const postOperations = {
     slug?: string,
     scheduledAt?: string
   ) => {
-    // Get existing slugs to ensure uniqueness
-    const existingSlugs = db.prepare('SELECT slug FROM posts WHERE slug IS NOT NULL').all()
-      .map((row: any) => row.slug);
-    
-    const finalSlug = slug || generateUniqueSlug(title, existingSlugs);
-    
-    const result = db.prepare(`
-      INSERT INTO posts (
-        title, content, slug, excerpt, meta_description, keywords, 
-        featured_image, is_published, scheduled_at, topic_id, view_count
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)
-    `).run(
-      title, 
-      content, 
-      finalSlug, 
-      excerpt || null, 
-      metaDescription || null, 
-      keywords || null,
-      featuredImage || null,
-      isPublished ? 1 : 0, 
-      scheduledAt || null,
-      topicId || null
-    );
-    return result.lastInsertRowid;
+    try {
+      // Get existing slugs to ensure uniqueness
+      const existingSlugs = db.prepare('SELECT slug FROM posts WHERE slug IS NOT NULL').all()
+        .map((row: any) => row.slug);
+      
+      const finalSlug = slug || generateUniqueSlug(title, existingSlugs);
+      
+      const result = db.prepare(`
+        INSERT INTO posts (
+          title, content, slug, excerpt, meta_description, keywords, 
+          featured_image, is_published, scheduled_at, topic_id, view_count
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)
+      `).run(
+        title, 
+        content, 
+        finalSlug, 
+        excerpt || null, 
+        metaDescription || null, 
+        keywords || null,
+        featuredImage || null,
+        isPublished ? 1 : 0, 
+        scheduledAt || null,
+        topicId || null
+      );
+      
+      return result.lastInsertRowid;
+    } catch (error) {
+      console.error('Error in postOperations.create:', error);
+      throw error;
+    }
   },
 
   // Get all posts with topic information
