@@ -7,6 +7,22 @@ const db = new Database(dbPath);
 console.log('🔧 Starting database migration...');
 
 try {
+  // Check if posts table exists
+  const tables = db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='posts'").all();
+  
+  if (tables.length === 0) {
+    console.log('❌ Posts table does not exist!');
+    console.log('⚠️  Your database is too old or corrupted.');
+    console.log('\n📋 Please backup your current database and run this command to recreate it:');
+    console.log('   cd /root/landing_page_v1');
+    console.log('   pm2 stop icoderx');
+    console.log('   cp data/blog.db data/blog.db.backup');
+    console.log('   rm data/blog.db');
+    console.log('   pm2 start icoderx');
+    console.log('\n⚠️  WARNING: This will delete all existing data!\n');
+    process.exit(1);
+  }
+
   // Check existing columns
   const tableInfo = db.prepare("PRAGMA table_info(posts)").all();
   const existingColumns = tableInfo.map(col => col.name);
