@@ -55,9 +55,22 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       return auth.response!;
     }
 
-    const { title, content, isPublished, topicId } = await request.json();
+    const body = await request.json();
     const resolvedParams = await params;
     const postId = parseInt(resolvedParams.id);
+
+    const { 
+      title, 
+      content, 
+      isPublished, 
+      topicId,
+      excerpt,
+      metaDescription,
+      keywords,
+      featuredImage,
+      slug,
+      scheduledAt
+    } = body;
 
     if (!title || !content) {
       return NextResponse.json(
@@ -66,7 +79,19 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       );
     }
 
-    const updated = postOperations.update(postId, title, content, isPublished, topicId);
+    const updated = postOperations.update(
+      postId, 
+      title, 
+      content, 
+      isPublished, 
+      topicId,
+      excerpt,
+      metaDescription,
+      keywords,
+      featuredImage,
+      slug,
+      scheduledAt
+    );
     
     if (updated) {
       const updatedPost = postOperations.getById(postId);

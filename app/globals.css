@@ -221,6 +221,16 @@ body {
   background: linear-gradient(135deg, #0072ff, #7700ff);
 }
 
+/* Hide scrollbar for horizontal scroll */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* Enhanced social icon animations */
 .neon-glow:hover {
   filter: drop-shadow(0 0 8px currentColor);

@@ -84,7 +84,7 @@ export const organizationSchema = {
   },
   "sameAs": [
     "https://t.me/iCoderXvn",
-    "https://youtube.com/@iCoderXvn", 
+    "https://youtube.com/@iCoderX_vn", 
     "https://facebook.com/iCoderXvn",
     "https://twitter.com/iCoderXvn"
   ],

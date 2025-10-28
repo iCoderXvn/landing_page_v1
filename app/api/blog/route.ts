@@ -1,11 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { postOperations } from '@/lib/database';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const publishedPosts = postOperations.getPublished();
+    const { searchParams } = new URL(request.url);
+    const category = searchParams.get('category');
+    const limit = searchParams.get('limit');
     
-    const response = NextResponse.json({ posts: publishedPosts });
+    let posts;
+    
+    switch (category) {
+      case 'newest':
+        posts = postOperations.getNewest(limit ? parseInt(limit) : undefined);
+        break;
+      case 'most-visited':
+        posts = postOperations.getMostVisited(limit ? parseInt(limit) : undefined);
+        break;
+      default:
+        posts = postOperations.getPublished();
+        break;
+    }
+    
+    const response = NextResponse.json({ posts });
     
     // Prevent caching to ensure fresh data
     response.headers.set('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate');

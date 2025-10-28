@@ -1,0 +1,35 @@
+{
+  // Reduce file watcher load (helps avoid EMFILE on large transient trees)
+  "files.watcherExclude": {
+    "**/tmp/**": true,
+    "**/dist/**": true,
+    "**/node_modules/**": true,
+    "**/.next/**": true
+  },
+  // Exclude from search index / quick open to speed up operations
+  "search.exclude": {
+    "**/tmp/**": true,
+    "**/dist/**": true,
+    "**/node_modules/**": true,
+    "**/.next/**": true
+  },
+  // Hide transient tmp folders from the Explorer view
+  "files.exclude": {
+    "**/tmp/**": true,
+  },
+  // Configure GitHub Copilot to ignore certain directories
+  "github.copilot.advanced": {
+    "debug.overrideEngine": "copilot-codex",
+    "debug.testOverrideProxyUrl": "",
+    "debug.overrideProxyUrl": ""
+  },
+  "github.copilot.enable": {
+    "*": true,
+    "yaml": false,
+    "plaintext": false
+  },
+  "github.copilot.chat.fileExcludes": [
+    "**/node_modules/**",
+    "**/.next/**"
+  ]
+}

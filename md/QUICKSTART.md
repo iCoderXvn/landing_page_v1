@@ -95,7 +95,7 @@ Includes:
 - 📖 Read the [full documentation](./README.md)
 - 🚀 Check [deployment guide](./DEPLOYMENT.md)
 - 💬 Contact: admin@icoderx.vn
-- 📺 Watch tutorials: [@iCoderXvn](https://youtube.com/@iCoderXvn)
+- 📺 Watch tutorials: [@iCoderXvn](https://youtube.com/@iCoderX_vn)
 
 ---
 ⭐ **Star this repo if it helped you!**

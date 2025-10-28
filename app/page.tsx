@@ -1,5 +1,3 @@
-"use client"
-
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -24,12 +22,11 @@ import {
   Award,
   Facebook,
   Youtube,
-  Menu,
-  X,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import { getSiteSettings } from "@/lib/settings"
+import { MobileMenu } from "@/components/mobile-menu"
 
 // Custom X (Twitter) and Telegram icons as SVG components
 const XIcon = ({ className }: { className?: string }) => (
@@ -44,8 +41,9 @@ const TelegramIcon = ({ className }: { className?: string }) => (
   </svg>
 )
 
-export default function HomePage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+export default async function HomePage() {
+  // Fetch settings directly from database on server
+  const settings = await getSiteSettings()
 
   return (
     <div className="flex flex-col min-h-screen relative w-full overflow-x-hidden">
@@ -57,13 +55,13 @@ export default function HomePage() {
           <Link href="#home" className="flex items-center space-x-3">
             <Image
               src="/favicon.ico"
-              alt="iCoderX Logo - Automation Solutions"
+              alt={`${settings.siteName} Logo - Automation Solutions`}
               width={40}
               height={40}
               className="rounded-lg animate-float"
               priority
             />
-            <span className="text-2xl font-bold gradient-text">iCoderX</span>
+            <span className="text-2xl font-bold gradient-text">{settings.siteName}</span>
           </Link>
 
           <nav className="hidden md:flex items-center space-x-8 text-sm font-medium" role="navigation" aria-label="Main navigation">
@@ -90,73 +88,9 @@ export default function HomePage() {
           <div className="flex items-center gap-4">
             <Link href="/contact" className="hidden sm:inline-flex cyber-button text-black font-semibold px-6 items-center justify-center rounded-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10" aria-label="Nhận báo giá miễn phí cho dự án tự động hóa">Báo Giá Miễn Phí</Link>
             
-            {/* Mobile menu button */}
-            <button
-              className="md:hidden p-2 text-gray-300 hover:text-blue-400 transition-colors"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle mobile menu"
-            >
-              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
+            <MobileMenu />
           </div>
         </div>
-
-        {/* Mobile menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden border-t border-blue-500/20 bg-black/95 backdrop-blur-md">
-            <nav className="container mx-auto px-4 py-4 flex flex-col space-y-4" role="navigation">
-              <Link 
-                href="#home" 
-                className="text-blue-400 font-semibold py-2 px-2 rounded transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Trang Chủ
-              </Link>
-              <Link 
-                href="#services" 
-                className="text-gray-300 hover:text-blue-400 py-2 px-2 rounded transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Dịch Vụ
-              </Link>
-              <Link 
-                href="#solutions" 
-                className="text-gray-300 hover:text-blue-400 py-2 px-2 rounded transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Giải Pháp
-              </Link>
-              <Link 
-                href="#clients" 
-                className="text-gray-300 hover:text-blue-400 py-2 px-2 rounded transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Khách Hàng
-              </Link>
-              <Link 
-                href="/blog" 
-                className="text-gray-300 hover:text-blue-400 py-2 px-2 rounded transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Blog
-              </Link>
-              <Link 
-                href="#contact" 
-                className="text-gray-300 hover:text-blue-400 py-2 px-2 rounded transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Liên Hệ
-              </Link>
-              <Link 
-                href="/contact" 
-                className="cyber-button text-black font-semibold px-6 py-3 rounded-md text-sm transition-colors mt-4 text-center"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Báo Giá Miễn Phí
-              </Link>
-            </nav>
-          </div>
-        )}
       </header>
 
       <main className="flex-1 relative z-10 pt-16" role="main">
@@ -187,7 +121,7 @@ export default function HomePage() {
                   <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
                 </Link>
                 <Link
-                  href="https://youtube.com/@iCoderXvn"
+                  href={settings.youtubeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="border-blue-500/50 text-blue-400 hover:bg-blue-500/10 px-8 py-4 text-lg bg-transparent h-12 border-2 rounded-md inline-flex items-center justify-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
@@ -547,7 +481,7 @@ export default function HomePage() {
                     </div>
                   </div>
                   <Link
-                    href="https://youtube.com/@iCoderXvn"
+                    href={settings.youtubeUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="border-blue-500/50 text-blue-400 hover:bg-blue-500/10 bg-transparent border rounded-md px-3 py-2 text-sm inline-flex items-center justify-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
@@ -587,7 +521,7 @@ export default function HomePage() {
                     </div>
                   </div>
                   <Link
-                    href="https://youtube.com/@iCoderXvn"
+                    href={settings.youtubeUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="border-purple-500/50 text-purple-400 hover:bg-purple-500/10 bg-transparent border rounded-md px-3 py-2 text-sm inline-flex items-center justify-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
@@ -796,40 +730,40 @@ export default function HomePage() {
               <div className="flex items-center space-x-3">
                 <Image
                   src="/favicon.ico"
-                  alt="iCoderX Logo - Automation Solutions"
+                  alt={`${settings.siteName} Logo - Automation Solutions`}
                   width={40}
                   height={40}
                   className="rounded-lg"
                 />
-                <span className="text-2xl font-bold gradient-text">iCoderX</span>
+                <span className="text-2xl font-bold gradient-text">{settings.siteName}</span>
               </div>
-              <p className="text-sm text-gray-400">Xây dựng tương lai với tự động hóa. Từng bot một.</p>
+              <p className="text-sm text-gray-400">{settings.siteDescription}</p>
               <nav className="flex space-x-4" aria-label="Social Media Links">
                 <Link
-                  href="https://facebook.com/iCoderXvn"
+                  href={settings.facebookUrl}
                   className="text-gray-400 hover:text-blue-400 transition-all duration-300 hover:scale-110 neon-glow"
-                  aria-label="Theo dõi iCoderX trên Facebook"
+                  aria-label={`Theo dõi ${settings.siteName} trên Facebook`}
                 >
                   <Facebook className="h-6 w-6" aria-hidden="true" />
                 </Link>
                 <Link
-                  href="https://twitter.com/iCoderXvn"
+                  href={settings.twitterUrl}
                   className="text-gray-400 hover:text-blue-400 transition-all duration-300 hover:scale-110 neon-glow"
-                  aria-label="Theo dõi iCoderX trên Twitter/X"
+                  aria-label={`Theo dõi ${settings.siteName} trên Twitter/X`}
                 >
                   <XIcon className="h-6 w-6" aria-hidden="true" />
                 </Link>
                 <Link
-                  href="https://youtube.com/@iCoderXvn"
+                  href={settings.youtubeUrl}
                   className="text-gray-400 hover:text-blue-400 transition-all duration-300 hover:scale-110 neon-glow"
-                  aria-label="Subscribe kênh YouTube iCoderX"
+                  aria-label={`Subscribe kênh YouTube ${settings.siteName}`}
                 >
                   <Youtube className="h-6 w-6" aria-hidden="true" />
                 </Link>
                 <Link
-                  href="https://t.me/iCoderXvn"
+                  href={settings.telegramUrl}
                   className="text-gray-400 hover:text-blue-400 transition-all duration-300 hover:scale-110 neon-glow"
-                  aria-label="Liên hệ iCoderX qua Telegram"
+                  aria-label={`Liên hệ ${settings.siteName} qua Telegram`}
                 >
                   <TelegramIcon className="h-6 w-6" aria-hidden="true" />
                 </Link>
@@ -877,16 +811,16 @@ export default function HomePage() {
               <div className="space-y-3 text-sm text-gray-400">
                 <div className="flex items-center space-x-2 group cursor-pointer">
                   <Mail className="h-4 w-4" aria-hidden="true" />
-                  <a href="mailto:admin@icoderx.vn" className="hover:text-blue-400 transition-colors">admin@icoderx.vn</a>
+                  <a href={`mailto:${settings.contactEmail}`} className="hover:text-blue-400 transition-colors">{settings.contactEmail}</a>
                   <Copy className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
                 </div>
                 <div className="flex items-center space-x-2">
                   <TelegramIcon className="h-4 w-4" aria-hidden="true" />
-                  <a href="https://t.me/iCoderXvn" className="hover:text-blue-400 transition-colors">iCoderXvn</a>
+                  <a href={settings.telegramUrl} className="hover:text-blue-400 transition-colors">{settings.telegramUrl.replace('https://t.me/', '')}</a>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Youtube className="h-4 w-4" aria-hidden="true" />
-                  <a href="https://youtube.com/@iCoderXvn" className="hover:text-blue-400 transition-colors">iCoderXvn</a>
+                  <a href={settings.youtubeUrl} className="hover:text-blue-400 transition-colors">{settings.youtubeUrl.replace('https://www.youtube.com/', '').replace('https://youtube.com/', '')}</a>
                 </div>
               </div>
             </address>
@@ -894,7 +828,7 @@ export default function HomePage() {
 
           <div className="mt-8 border-t border-blue-500/20 pt-8 text-center text-sm text-gray-400">
             <p>
-              &copy; {new Date().getFullYear()} iCoderX. Tất cả quyền được bảo lưu. Được xây dựng với ⚡ tự động hóa.
+              &copy; {new Date().getFullYear()} {settings.siteName}. Tất cả quyền được bảo lưu. Được xây dựng với ⚡ tự động hóa.
             </p>
           </div>
         </div>

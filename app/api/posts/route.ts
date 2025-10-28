@@ -39,7 +39,20 @@ export async function POST(request: NextRequest) {
       return auth.response!;
     }
 
-    const { title, content, isPublished = true, topicId } = await request.json();
+    const body = await request.json();
+    
+    const { 
+      title, 
+      content, 
+      isPublished = true, 
+      topicId,
+      excerpt,
+      metaDescription,
+      keywords,
+      featuredImage,
+      slug,
+      scheduledAt
+    } = body;
 
     if (!title || !content) {
       return NextResponse.json(
@@ -48,7 +61,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const postId = postOperations.create(title, content, isPublished, topicId);
+    const postId = postOperations.create(
+      title, 
+      content, 
+      isPublished, 
+      topicId,
+      excerpt,
+      metaDescription,
+      keywords,
+      featuredImage,
+      slug,
+      scheduledAt
+    );
     const newPost = postOperations.getById(Number(postId));
 
     return NextResponse.json({ 

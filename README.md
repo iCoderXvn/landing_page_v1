@@ -275,7 +275,7 @@ For support and questions:
 
 - **Email**: admin@icoderx.vn
 - **Telegram**: [@iCoderXvn](https://t.me/iCoderXvn)
-- **YouTube**: [@iCoderXvn](https://youtube.com/@iCoderXvn)
+- **YouTube**: [@iCoderXvn](https://youtube.com/@iCoderX_vn)
 
 ## 🏆 Credits
 

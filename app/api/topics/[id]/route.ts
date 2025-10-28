@@ -60,7 +60,7 @@ export async function PUT(
       );
     }
 
-    const { name, description } = await request.json();
+    const { name, description, color } = await request.json();
 
     if (!name?.trim()) {
       return NextResponse.json(
@@ -69,7 +69,21 @@ export async function PUT(
       );
     }
 
-    const topic = await topicOperations.update(id, name.trim(), description?.trim());
+    const success = await topicOperations.update(
+      id, 
+      name.trim(), 
+      description?.trim(),
+      color || '#3B82F6'
+    );
+    
+    if (!success) {
+      return NextResponse.json(
+        { success: false, error: 'Failed to update topic or name already exists' },
+        { status: 400 }
+      );
+    }
+    
+    const topic = await topicOperations.getById(id);
     return NextResponse.json({ success: true, topic });
   } catch (error) {
     console.error('Error updating topic:', error);
