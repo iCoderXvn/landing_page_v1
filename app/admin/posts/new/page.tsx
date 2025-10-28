@@ -32,6 +32,7 @@ import { AdminSidebar } from "@/components/admin-sidebar";
 import { useRouter } from "next/navigation";
 import renderContent from "@/lib/markdown-renderer";
 import { VideoPlayer } from "@/components/video-player";
+import { generateSlug } from "@/lib/slug-utils";
 
 interface Topic {
   id: number;
@@ -142,12 +143,7 @@ export default function NewPostPage() {
     
     // Auto-generate slug from title
     if (field === "title" && typeof value === "string") {
-      const slug = value
-        .toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, "")
-        .replace(/\s+/g, "-")
-        .replace(/-+/g, "-")
-        .trim();
+      const slug = generateSlug(value);
       setFormData(prev => ({ ...prev, slug }));
     }
     

@@ -6,7 +6,12 @@
  * Remove Vietnamese accents and convert to ASCII
  */
 function removeVietnameseAccents(str: string): string {
+  // First, try Unicode normalization to decompose characters
+  let result = str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  
+  // Then apply manual mapping for Vietnamese characters that might not be handled by normalization
   const accents: { [key: string]: string } = {
+    // Lowercase vowels with accents
     'à': 'a', 'á': 'a', 'ạ': 'a', 'ả': 'a', 'ã': 'a', 'â': 'a', 'ầ': 'a', 'ấ': 'a', 'ậ': 'a', 'ẩ': 'a', 'ẫ': 'a', 'ă': 'a', 'ằ': 'a', 'ắ': 'a', 'ặ': 'a', 'ẳ': 'a', 'ẵ': 'a',
     'è': 'e', 'é': 'e', 'ẹ': 'e', 'ẻ': 'e', 'ẽ': 'e', 'ê': 'e', 'ề': 'e', 'ế': 'e', 'ệ': 'e', 'ể': 'e', 'ễ': 'e',
     'ì': 'i', 'í': 'i', 'ị': 'i', 'ỉ': 'i', 'ĩ': 'i',
@@ -14,6 +19,7 @@ function removeVietnameseAccents(str: string): string {
     'ù': 'u', 'ú': 'u', 'ụ': 'u', 'ủ': 'u', 'ũ': 'u', 'ư': 'u', 'ừ': 'u', 'ứ': 'u', 'ự': 'u', 'ử': 'u', 'ữ': 'u',
     'ỳ': 'y', 'ý': 'y', 'ỵ': 'y', 'ỷ': 'y', 'ỹ': 'y',
     'đ': 'd',
+    // Uppercase vowels with accents
     'À': 'A', 'Á': 'A', 'Ạ': 'A', 'Ả': 'A', 'Ã': 'A', 'Â': 'A', 'Ầ': 'A', 'Ấ': 'A', 'Ậ': 'A', 'Ẩ': 'A', 'Ẫ': 'A', 'Ă': 'A', 'Ằ': 'A', 'Ắ': 'A', 'Ặ': 'A', 'Ẳ': 'A', 'Ẵ': 'A',
     'È': 'E', 'É': 'E', 'Ẹ': 'E', 'Ẻ': 'E', 'Ẽ': 'E', 'Ê': 'E', 'Ề': 'E', 'Ế': 'E', 'Ệ': 'E', 'Ể': 'E', 'Ễ': 'E',
     'Ì': 'I', 'Í': 'I', 'Ị': 'I', 'Ỉ': 'I', 'Ĩ': 'I',
@@ -23,7 +29,10 @@ function removeVietnameseAccents(str: string): string {
     'Đ': 'D'
   };
 
-  return str.split('').map(char => accents[char] || char).join('');
+  // Apply character mapping
+  result = result.split('').map(char => accents[char] || char).join('');
+  
+  return result;
 }
 
 /**
