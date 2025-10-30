@@ -83,9 +83,9 @@ try {
   
   if (!adminExists) {
     console.log('👤 Creating default admin user...');
-    const hashedPassword = bcrypt.hashSync('admin123', 10);
+    const hashedPassword = bcrypt.hashSync('Ha@9995536123', 10);
     db.prepare('INSERT INTO users (username, password, role) VALUES (?, ?, ?)').run('admin', hashedPassword, 'admin');
-    console.log('✅ Admin user created (username: admin, password: admin123)');
+    console.log('✅ Admin user created (username: admin, password: Ha@9995536123)');
   } else {
     console.log('✅ Admin user already exists');
   }
@@ -118,8 +118,8 @@ try {
   console.log('\n🎉 Database initialization completed successfully!\n');
   console.log('📝 Next steps:');
   console.log('   1. Start your application: pm2 restart icoderx');
-  console.log('   2. Login with username: admin, password: admin123');
-  console.log('   3. Change the default password in admin settings\n');
+  console.log('   2. Login with username: admin, password: Ha@9995536123');
+  console.log('   3. Keep your password secure\n');
 
 } catch (error) {
   console.error('\n❌ Database initialization failed:', error);
