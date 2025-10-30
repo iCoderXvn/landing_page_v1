@@ -25,13 +25,11 @@ export function BreadcrumbBar({ items }: BreadcrumbBarProps) {
     { symbol: 'ADA', name: 'Cardano', price: 0, change: 0 },
   ])
 
-  // Fetch real crypto prices from CoinGecko API
+  // Fetch real crypto prices from API route (proxied to avoid CORS)
   useEffect(() => {
     const fetchPrices = async () => {
       try {
-        const response = await fetch(
-          'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,binancecoin,solana,ripple,cardano&vs_currencies=usd&include_24hr_change=true'
-        )
+        const response = await fetch('/api/crypto-prices')
         const data = await response.json()
         
         setTickers([
