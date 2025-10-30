@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { BinaryRain } from "@/components/binary-rain";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import { BreadcrumbSchema } from "@/components/breadcrumb-schema";
+import { BreadcrumbBar } from "@/components/breadcrumb-bar";
 import { isVideoUrl } from "@/components/video-player";
 import { Zap, Play } from "lucide-react";
 import Image from "next/image";
@@ -248,17 +248,16 @@ export function BlogPageClient({ settings }: BlogPageClientProps) {
       <BinaryRain />
       <Header siteName={settings.siteName} />
 
-      {/* Breadcrumbs */}
-      <div className="relative z-10 pt-20 bg-black/80 border-b border-blue-500/20">
-        <BreadcrumbSchema
-          items={[
-            { name: 'Blog', href: '/blog' }
-          ]}
-        />
-      </div>
+      {/* Breadcrumbs with Ticker - Fixed */}
+      <BreadcrumbBar
+        items={[
+          { name: 'Trang Chủ', href: '/' },
+          { name: 'Blog', href: '/blog' }
+        ]}
+      />
 
-      {/* Category navigation pills - attached below breadcrumbs with different styling */}
-      <div className="sticky top-16 z-40 w-full border-b border-purple-500/30 bg-gradient-to-r from-purple-900/40 via-violet-900/40 to-purple-900/40 backdrop-blur-md shadow-lg">
+      {/* Category navigation pills - below breadcrumb bar */}
+      <div className="sticky top-[95px] md:top-[100px] z-30 w-full border-b border-purple-500/30 bg-gradient-to-r from-purple-900/40 via-violet-900/40 to-purple-900/40 backdrop-blur-md shadow-lg mt-[95px] md:mt-[100px]">
         <div className="container mx-auto px-2 md:px-6">
           <div className="flex items-center justify-start md:justify-center gap-2 md:gap-3 overflow-x-auto scrollbar-hide pb-2 pt-2 md:pb-3 md:pt-3">
             <button
@@ -333,7 +332,7 @@ export function BlogPageClient({ settings }: BlogPageClientProps) {
         </div>
       </div>
 
-      <main className="flex-1 relative z-10 pt-40" role="main">
+      <main className="flex-1 relative z-10 pt-8" role="main">
         {/* Overall gradient background for main content */}
         <div className="gradient-bg-overlay" />
 

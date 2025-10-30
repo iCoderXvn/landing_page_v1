@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { BinaryRain } from '@/components/binary-rain'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
-import { BreadcrumbSchema } from '@/components/breadcrumb-schema'
+import { BreadcrumbBar } from '@/components/breadcrumb-bar'
 import {
   Gamepad2,
   Bot,
@@ -55,19 +55,16 @@ export default function MMOAutomationPage() {
       <BinaryRain />
       <Header siteName={settings.siteName} />
 
-      <main className="flex-1 relative z-10 pt-16" role="main">
-        {/* Breadcrumb Navigation */}
-        <div className="pt-20 pb-4 bg-black/80 border-b border-blue-500/20">
-          <div className="container mx-auto px-4 md:px-6">
-            <BreadcrumbSchema
-              items={[
-                { name: 'Trang Chủ', href: '/' },
-                { name: 'Dịch Vụ', href: '/#services' },
-                { name: 'Bot MMO & Tự Động Hóa Game', href: '/services/mmo-automation' },
-              ]}
-            />
-          </div>
-        </div>
+      {/* Breadcrumb Navigation with Ticker - Fixed */}
+      <BreadcrumbBar
+        items={[
+          { name: 'Trang Chủ', href: '/' },
+          { name: 'Dịch Vụ', href: '/#services' },
+          { name: 'Bot MMO & Tự Động Hóa Game', href: '/services/mmo-automation' },
+        ]}
+      />
+
+      <main className="flex-1 relative z-10 pt-[75px]" role="main">
 
         {/* Hero Section */}
         <section className="relative py-20 md:py-32 overflow-hidden border-b border-blue-500/20">

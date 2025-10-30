@@ -3,7 +3,7 @@ import { getSiteSettings } from '@/lib/settings'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { BinaryRain } from '@/components/binary-rain'
-import { BreadcrumbSchema } from '@/components/breadcrumb-schema'
+import { BreadcrumbBar } from '@/components/breadcrumb-bar'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -50,14 +50,16 @@ export default function AboutPage() {
       <BinaryRain />
       <Header siteName={settings.siteName} />
 
-      {/* Breadcrumbs */}
-      <div className="relative z-10 pt-20 bg-black/80 border-b border-blue-500/20">
-        <BreadcrumbSchema
-          items={[
-            { name: 'Về Chúng Tôi', href: '/about' }
-          ]}
-        />
-      </div>
+      {/* Breadcrumbs with Ticker - Fixed */}
+      <BreadcrumbBar
+        items={[
+          { name: 'Trang Chủ', href: '/' },
+          { name: 'Về Chúng Tôi', href: '/about' }
+        ]}
+      />
+      
+      {/* Spacer for fixed breadcrumb bar */}
+      <div className="h-11"></div>
 
       <main className="flex-1 relative z-10" role="main">
         {/* Hero Section */}

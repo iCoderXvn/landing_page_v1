@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { BinaryRain } from "@/components/binary-rain";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import { BreadcrumbSchema } from "@/components/breadcrumb-schema";
+import { BreadcrumbBar } from '@/components/breadcrumb-bar'
 import { VideoPlayer, isVideoUrl } from "@/components/video-player";
 import { AnalyticsTracker } from "@/components/analytics-tracker";
 import Link from "next/link";
@@ -328,15 +328,17 @@ export function BlogDetailClient({ settings, postId }: BlogDetailClientProps) {
       <Header siteName={settings.siteName} />
       {post && <AnalyticsTracker postId={post.id} />}
 
-      {/* Breadcrumbs */}
-      <div className="relative z-10 pt-20 bg-black/80 border-b border-blue-500/20">
-        <BreadcrumbSchema
-          items={[
-            { name: 'Blog', href: '/blog' },
-            { name: post.title, href: `/blog/${post.slug || post.id}` }
-          ]}
-        />
-      </div>
+      {/* Breadcrumbs with Ticker - Fixed */}
+      <BreadcrumbBar
+        items={[
+          { name: 'Trang Chủ', href: '/' },
+          { name: 'Blog', href: '/blog' },
+          { name: post.title, href: `/blog/${post.slug || post.id}` }
+        ]}
+      />
+      
+      {/* Spacer for fixed breadcrumb bar */}
+      <div className="h-11"></div>
 
       <main className="flex-1 relative z-10 pt-8" role="main">
         <div className="gradient-bg-overlay" />

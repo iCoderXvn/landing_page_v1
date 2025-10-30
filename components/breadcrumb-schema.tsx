@@ -42,9 +42,9 @@ export function BreadcrumbSchema({ items, className = '' }: BreadcrumbSchemaProp
       {/* Visual Breadcrumbs */}
       <nav
         aria-label="Breadcrumb"
-        className={`container mx-auto px-4 md:px-6 py-4 ${className}`}
+        className={`container mx-auto px-4 md:px-6 ${className}`}
       >
-        <ol className="flex items-center space-x-2 text-sm" itemScope itemType="https://schema.org/BreadcrumbList">
+        <ol className="flex items-center flex-wrap gap-0.5 text-[10px] opacity-60" itemScope itemType="https://schema.org/BreadcrumbList">
           {allItems.map((item, index) => {
             const isLast = index === allItems.length - 1
             
@@ -66,12 +66,12 @@ export function BreadcrumbSchema({ items, className = '' }: BreadcrumbSchemaProp
                       <span itemProp="name">{item.name}</span>
                     </Link>
                     <meta itemProp="position" content={String(index + 1)} />
-                    <ChevronRight className="w-4 h-4 mx-2 text-gray-600" aria-hidden="true" />
+                    <ChevronRight className="w-2.5 h-2.5 mx-0.5 text-gray-600" aria-hidden="true" />
                   </>
                 ) : (
                   <>
                     <span
-                      className="text-blue-400 font-medium"
+                      className="text-blue-400"
                       itemProp="name"
                       aria-current="page"
                     >
