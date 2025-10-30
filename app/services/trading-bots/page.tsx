@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { BinaryRain } from '@/components/binary-rain'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
+import { BreadcrumbSchema } from '@/components/breadcrumb-schema'
 import {
   TrendingUp,
   Bot,
@@ -39,6 +40,9 @@ export function generateMetadata(): Metadata {
     title: `Bot Giao Dịch Crypto - Trading Bot AI | ${settings.siteName}`,
     description: 'Phát triển bot giao dịch crypto tự động với AI, thuật toán trading thông minh, backtest, quản lý rủi ro. Hỗ trợ Binance, Bybit, OKX. Bot trading 24/7 với ROI tối ưu.',
     keywords: 'bot giao dịch crypto, crypto trading bot, bot trading tự động, thuật toán trading, AI trading bot, bot Binance, bot Bybit, automated trading, algorithmic trading, crypto bot development, DCA bot, grid trading bot, arbitrage bot, market making bot',
+    alternates: {
+      canonical: `${settings.siteUrl}/services/trading-bots`,
+    },
   }
 }
 
@@ -51,6 +55,19 @@ export default function TradingBotsPage() {
       <Header siteName={settings.siteName} />
 
       <main className="flex-1 relative z-10 pt-16" role="main">
+        {/* Breadcrumb Navigation */}
+        <div className="pt-20 pb-4 bg-black/80 border-b border-blue-500/20">
+          <div className="container mx-auto px-4 md:px-6">
+            <BreadcrumbSchema
+              items={[
+                { name: 'Trang Chủ', href: '/' },
+                { name: 'Dịch Vụ', href: '/#services' },
+                { name: 'Bot Giao Dịch Crypto', href: '/services/trading-bots' },
+              ]}
+            />
+          </div>
+        </div>
+
         {/* Hero Section */}
       <section className="relative py-20 md:py-32 overflow-hidden border-b border-blue-500/20">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-black/40" />

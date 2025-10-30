@@ -50,7 +50,7 @@ export function generateMetadata(): Metadata {
       siteName: settings.siteName,
       images: [
         {
-          url: '/og-image.jpg',
+          url: '/og-image.png',
           width: 1200,
           height: 630,
           alt: `${settings.siteName} - Automation Solutions`,
@@ -61,7 +61,7 @@ export function generateMetadata(): Metadata {
       card: 'summary_large_image',
       title: settings.siteName,
       description: settings.defaultMetaDescription || settings.siteDescription,
-      images: ['/og-image.jpg'],
+      images: ['/og-image.png'],
       creator: settings.twitterUrl ? `@${settings.twitterUrl.split('/').pop()}` : '@iCoderXvn',
     },
     verification: {

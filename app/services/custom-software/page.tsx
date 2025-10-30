@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { BinaryRain } from '@/components/binary-rain'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
+import { BreadcrumbSchema } from '@/components/breadcrumb-schema'
 import {
   Code,
   Zap,
@@ -40,6 +41,9 @@ export function generateMetadata(): Metadata {
     title: `Phần Mềm Tùy Chỉnh - Custom Software Development | ${settings.siteName}`,
     description: 'Phát triển phần mềm tùy chỉnh theo yêu cầu: Web App, Mobile App, Desktop App, API, SaaS. Giải pháp công nghệ toàn diện cho doanh nghiệp từ Startup đến Enterprise.',
     keywords: 'phần mềm tùy chỉnh, custom software development, lập trình theo yêu cầu, web application development, mobile app development, desktop software, SaaS development, API development, enterprise software, startup tech solution, phát triển ứng dụng, thiết kế phần mềm, tư vấn công nghệ, outsourcing development, offshore development',
+    alternates: {
+      canonical: `${settings.siteUrl}/services/custom-software`,
+    },
   }
 }
 
@@ -52,6 +56,19 @@ export default function CustomSoftwarePage() {
       <Header siteName={settings.siteName} />
 
       <main className="flex-1 relative z-10 pt-16" role="main">
+        {/* Breadcrumb Navigation */}
+        <div className="pt-20 pb-4 bg-black/80 border-b border-blue-500/20">
+          <div className="container mx-auto px-4 md:px-6">
+            <BreadcrumbSchema
+              items={[
+                { name: 'Trang Chủ', href: '/' },
+                { name: 'Dịch Vụ', href: '/#services' },
+                { name: 'Phần Mềm Tùy Chỉnh', href: '/services/custom-software' },
+              ]}
+            />
+          </div>
+        </div>
+
         {/* Hero Section */}
         <section className="relative py-20 md:py-32 overflow-hidden border-b border-blue-500/20">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-black/40" />

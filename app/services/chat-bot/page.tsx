@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { BinaryRain } from '@/components/binary-rain'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
+import { BreadcrumbSchema } from '@/components/breadcrumb-schema'
 import {
   MessageSquare,
   Bot,
@@ -38,6 +39,9 @@ export function generateMetadata(): Metadata {
     title: `Chat Bot Thông Minh - AI Chatbot Development | ${settings.siteName}`,
     description: 'Phát triển chatbot AI thông minh cho Telegram, Discord, Facebook Messenger, website. Tự động hóa customer service, quản lý cộng đồng 24/7 với NLP & Machine Learning.',
     keywords: 'chatbot AI, bot telegram, bot discord, facebook messenger bot, website chatbot, customer service bot, AI assistant, conversational AI, NLP chatbot, machine learning bot, automated customer support, community management bot, chat automation, intelligent chatbot, virtual assistant, chatbot development, messenger automation, telegram bot API, discord bot development',
+    alternates: {
+      canonical: `${settings.siteUrl}/services/chat-bot`,
+    },
   }
 }
 
@@ -50,6 +54,19 @@ export default function ChatBotPage() {
       <Header siteName={settings.siteName} />
 
       <main className="flex-1 relative z-10 pt-16" role="main">
+        {/* Breadcrumb Navigation */}
+        <div className="pt-20 pb-4 bg-black/80 border-b border-blue-500/20">
+          <div className="container mx-auto px-4 md:px-6">
+            <BreadcrumbSchema
+              items={[
+                { name: 'Trang Chủ', href: '/' },
+                { name: 'Dịch Vụ', href: '/#services' },
+                { name: 'Chat Bot Thông Minh', href: '/services/chat-bot' },
+              ]}
+            />
+          </div>
+        </div>
+
         {/* Hero Section */}
         <section className="relative py-20 md:py-32 overflow-hidden border-b border-blue-500/20">
           <div className="absolute inset-0 bg-gradient-to-br from-green-900/20 via-blue-900/20 to-black/40" />

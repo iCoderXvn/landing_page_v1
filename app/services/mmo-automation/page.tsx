@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { BinaryRain } from '@/components/binary-rain'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
+import { BreadcrumbSchema } from '@/components/breadcrumb-schema'
 import {
   Gamepad2,
   Bot,
@@ -40,6 +41,9 @@ export function generateMetadata(): Metadata {
     title: `Bot MMO & Tự Động Hóa Game | ${settings.siteName}`,
     description: 'Phát triển bot MMO tự động, bot farming game, auto quest, auto skill. Hỗ trợ MMORPG, mobile game, web game. Tự động hóa nhân vật 24/7, tiết kiệm thời gian, tối ưu hiệu quả.',
     keywords: 'bot MMO, bot game auto, tự động hóa game, bot farming, auto quest, auto skill, bot MMORPG, bot mobile game, bot web game, game automation, character automation, resource farming bot, leveling bot, auto grinding, macro game, script game, bot nhân vật, tool MMO, phần mềm auto game, bot thu thập tài nguyên',
+    alternates: {
+      canonical: `${settings.siteUrl}/services/mmo-automation`,
+    },
   }
 }
 
@@ -52,6 +56,19 @@ export default function MMOAutomationPage() {
       <Header siteName={settings.siteName} />
 
       <main className="flex-1 relative z-10 pt-16" role="main">
+        {/* Breadcrumb Navigation */}
+        <div className="pt-20 pb-4 bg-black/80 border-b border-blue-500/20">
+          <div className="container mx-auto px-4 md:px-6">
+            <BreadcrumbSchema
+              items={[
+                { name: 'Trang Chủ', href: '/' },
+                { name: 'Dịch Vụ', href: '/#services' },
+                { name: 'Bot MMO & Tự Động Hóa Game', href: '/services/mmo-automation' },
+              ]}
+            />
+          </div>
+        </div>
+
         {/* Hero Section */}
         <section className="relative py-20 md:py-32 overflow-hidden border-b border-blue-500/20">
           <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-pink-900/20 to-black/40" />
