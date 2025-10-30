@@ -5,6 +5,7 @@ import { BinaryRain } from "@/components/binary-rain"
 import { AnimatedCounter } from "@/components/animated-counter"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
+import { BreadcrumbBar } from "@/components/breadcrumb-bar"
 import { Metadata } from "next"
 import {
   Bot,
@@ -58,6 +59,13 @@ export default function HomePage() {
     <div className="flex flex-col min-h-screen relative w-full overflow-x-hidden">
       <BinaryRain />
       <Header siteName={settings.siteName} />
+
+      {/* Breadcrumbs with Ticker - Fixed */}
+      <BreadcrumbBar
+        items={[
+          { name: 'Trang Chủ', href: '/' }
+        ]}
+      />
 
       <main className="flex-1 relative z-10 pt-16" role="main">
         {/* Hero Section */}
