@@ -24,22 +24,22 @@ export function Header({ siteName }: HeaderProps) {
         </Link>
 
         <nav className="hidden md:flex items-center space-x-8 text-sm font-medium" role="navigation" aria-label="Main navigation">
-          <Link href="/#home" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Đi đến trang chủ">
+          <Link href="/" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Đi đến trang chủ">
             Trang Chủ
+          </Link>
+          <Link href="/about" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Về chúng tôi">
+            Về Chúng Tôi
           </Link>
           <Link href="/#services" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Xem dịch vụ của chúng tôi">
             Dịch Vụ
           </Link>
-          <Link href="/#solutions" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Khám phá giải pháp tự động hóa">
-            Giải Pháp
-          </Link>
-          <Link href="/#clients" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Đọc phản hồi khách hàng">
-            Khách Hàng
+          <Link href="/docs" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Tài liệu hướng dẫn">
+            Tài Liệu
           </Link>
           <Link href="/blog" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Đọc blog và tin tức">
             Blog
           </Link>
-          <Link href="/#contact" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Liên hệ với chúng tôi">
+          <Link href="/contact" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Liên hệ với chúng tôi">
             Liên Hệ
           </Link>
         </nav>

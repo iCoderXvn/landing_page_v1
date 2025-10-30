@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { BinaryRain } from "@/components/binary-rain"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
+import { BreadcrumbSchema } from "@/components/breadcrumb-schema"
 import type { SiteSettings } from "@/lib/settings";
 import {
   MessageSquare,
@@ -43,7 +44,16 @@ export function ContactClient({ settings }: ContactClientProps) {
       <BinaryRain />
       <Header siteName={settings.siteName} />
 
-      <main className="flex-1 relative z-10 py-20 pt-32" role="main">
+      {/* Breadcrumbs */}
+      <div className="relative z-10 pt-20 bg-black/80 border-b border-blue-500/20">
+        <BreadcrumbSchema
+          items={[
+            { name: 'Liên Hệ', href: '/contact' }
+          ]}
+        />
+      </div>
+
+      <main className="flex-1 relative z-10 py-20" role="main">
         <div className="container mx-auto px-4 md:px-6">
           {/* Hero Section */}
           <section className="text-center mb-16">

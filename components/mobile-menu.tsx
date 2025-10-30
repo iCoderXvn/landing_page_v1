@@ -20,35 +20,35 @@ export function MobileMenu() {
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-blue-500/20 bg-black/95 backdrop-blur-md absolute top-16 left-0 right-0">
+        <div className="md:hidden border-t border-blue-500/20 bg-black/95 backdrop-blur-md absolute top-16 left-0 right-0 z-50">
           <nav className="container mx-auto px-4 py-4 flex flex-col space-y-4" role="navigation">
             <Link 
-              href="#home" 
+              href="/" 
               className="text-blue-400 font-semibold py-2 px-2 rounded transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
               Trang Chủ
             </Link>
             <Link 
-              href="#services" 
+              href="/about" 
+              className="text-gray-300 hover:text-blue-400 py-2 px-2 rounded transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Về Chúng Tôi
+            </Link>
+            <Link 
+              href="/#services" 
               className="text-gray-300 hover:text-blue-400 py-2 px-2 rounded transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
               Dịch Vụ
             </Link>
             <Link 
-              href="#solutions" 
+              href="/docs" 
               className="text-gray-300 hover:text-blue-400 py-2 px-2 rounded transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Giải Pháp
-            </Link>
-            <Link 
-              href="#clients" 
-              className="text-gray-300 hover:text-blue-400 py-2 px-2 rounded transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Khách Hàng
+              Tài Liệu
             </Link>
             <Link 
               href="/blog" 
@@ -58,7 +58,7 @@ export function MobileMenu() {
               Blog
             </Link>
             <Link 
-              href="#contact" 
+              href="/contact" 
               className="text-gray-300 hover:text-blue-400 py-2 px-2 rounded transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >

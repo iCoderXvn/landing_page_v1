@@ -1,26 +1,46 @@
 # Robots.txt for iCoderX - Automation Solutions
+# Optimized for Google Site Links SEO
+
 User-agent: *
 Allow: /
+Allow: /about
+Allow: /blog
+Allow: /blog/*
+Allow: /contact
+Allow: /docs
+Allow: /terms
+Allow: /privacy
+Allow: /services/*
 
-# Allow all major search engines
+# Block admin and API areas from all search engines
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /api/
+Disallow: /api/*
+
+# Allow specific search engines explicitly
 User-agent: Googlebot
 Allow: /
+Disallow: /admin
+Disallow: /api/
 
 User-agent: Bingbot
 Allow: /
+Disallow: /admin
+Disallow: /api/
 
 User-agent: Slurp
 Allow: /
+Disallow: /admin
+Disallow: /api/
 
 User-agent: DuckDuckBot
 Allow: /
-
-# Block admin area from search engines
-Disallow: /admin/
+Disallow: /admin
 Disallow: /api/
 
 # Sitemap location
 Sitemap: https://icoderx.vn/sitemap.xml
 
-# Crawl delay (optional)
+# Crawl delay (optional, helps with server load)
 Crawl-delay: 1

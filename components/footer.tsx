@@ -28,8 +28,8 @@ export function Footer({ siteName, siteDescription, contactEmail, facebookUrl, t
   return (
     <footer id="contact" className="w-full border-t border-blue-500/20 bg-black/80" role="contentinfo">
       <div className="container mx-auto px-4 md:px-6 py-12">
-        <div className="grid gap-8 lg:grid-cols-4">
-          <div className="space-y-4">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="space-y-4 sm:col-span-2 lg:col-span-1">
             <div className="flex items-center space-x-3">
               <Image
                 src="/favicon.ico"
@@ -93,8 +93,8 @@ export function Footer({ siteName, siteDescription, contactEmail, facebookUrl, t
               <Link href="/docs" className="text-gray-400 hover:text-blue-400 transition-colors">
                 Tài Liệu
               </Link>
-              <Link href="/api" className="text-gray-400 hover:text-blue-400 transition-colors">
-                Tham Khảo API
+              <Link href="/about" className="text-gray-400 hover:text-blue-400 transition-colors">
+                Về Chúng Tôi
               </Link>
             </nav>
           </div>
@@ -108,8 +108,8 @@ export function Footer({ siteName, siteDescription, contactEmail, facebookUrl, t
               <Link href="/services/mmo-automation" className="text-gray-400 hover:text-blue-400 transition-colors">
                 Tự Động Hóa MMO
               </Link>
-              <Link href="/services/discord-bots" className="text-gray-400 hover:text-blue-400 transition-colors">
-                Bot Discord
+              <Link href="/services/chat-bot" className="text-gray-400 hover:text-blue-400 transition-colors">
+                Chat Bot
               </Link>
               <Link href="/services/custom-software" className="text-gray-400 hover:text-blue-400 transition-colors">
                 Phần Mềm Tùy Chỉnh
@@ -119,28 +119,36 @@ export function Footer({ siteName, siteDescription, contactEmail, facebookUrl, t
 
           <address className="space-y-4 not-italic">
             <h4 className="text-sm font-semibold text-white">Liên Hệ</h4>
-            <div className="space-y-3 text-sm text-gray-400">
+            <div className="space-y-2 text-sm text-gray-400">
               {contactEmail && (
                 <div className="flex items-center space-x-2 group cursor-pointer">
-                  <Mail className="h-4 w-4" aria-hidden="true" />
-                  <a href={`mailto:${contactEmail}`} className="hover:text-blue-400 transition-colors">
+                  <Mail className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
+                  <a href={`mailto:${contactEmail}`} className="hover:text-blue-400 transition-colors break-all">
                     {contactEmail}
                   </a>
-                  <Copy className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
+                  <Copy className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" aria-hidden="true" />
+                </div>
+              )}
+              {facebookUrl && (
+                <div className="flex items-center space-x-2">
+                  <Facebook className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
+                  <a href={facebookUrl} className="hover:text-blue-400 transition-colors break-all" target="_blank" rel="noopener noreferrer">
+                    {facebookUrl.split('/').pop()}
+                  </a>
                 </div>
               )}
               {telegramUrl && (
                 <div className="flex items-center space-x-2">
-                  <TelegramIcon className="h-4 w-4" aria-hidden="true" />
-                  <a href={telegramUrl} className="hover:text-blue-400 transition-colors">
+                  <TelegramIcon className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
+                  <a href={telegramUrl} className="hover:text-blue-400 transition-colors break-all" target="_blank" rel="noopener noreferrer">
                     {telegramUrl.split('/').pop()}
                   </a>
                 </div>
               )}
               {youtubeUrl && (
                 <div className="flex items-center space-x-2">
-                  <Youtube className="h-4 w-4" aria-hidden="true" />
-                  <a href={youtubeUrl} className="hover:text-blue-400 transition-colors">
+                  <Youtube className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
+                  <a href={youtubeUrl} className="hover:text-blue-400 transition-colors break-all" target="_blank" rel="noopener noreferrer">
                     {youtubeUrl.split('/').pop()}
                   </a>
                 </div>

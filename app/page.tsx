@@ -3,6 +3,9 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { BinaryRain } from "@/components/binary-rain"
 import { AnimatedCounter } from "@/components/animated-counter"
+import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
+import { Metadata } from "next"
 import {
   Bot,
   Gamepad2,
@@ -12,29 +15,35 @@ import {
   Building,
   Star,
   ArrowRight,
-  Mail,
-  Copy,
   Zap,
   Shield,
   Cpu,
   Target,
   Users,
   Award,
+  Mail,
   Facebook,
   Youtube,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { getSiteSettings } from "@/lib/settings"
-import { MobileMenu } from "@/components/mobile-menu"
 
-// Custom X (Twitter) and Telegram icons as SVG components
-const XIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-  </svg>
-)
+// Generate metadata for homepage
+export function generateMetadata(): Metadata {
+  const settings = getSiteSettings()
+  
+  return {
+    title: settings.siteTitle || `${settings.siteName} - Giải Pháp Tự Động Hóa Chuyên Nghiệp`,
+    description: settings.defaultMetaDescription,
+    keywords: settings.defaultKeywords,
+    alternates: {
+      canonical: settings.siteUrl || 'https://icoderx.vn',
+    },
+  }
+}
 
+// Custom Telegram icon as SVG component
 const TelegramIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor">
     <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
@@ -48,50 +57,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen relative w-full overflow-x-hidden">
       <BinaryRain />
-
-      {/* Header */}
-      <header className="fixed top-0 z-50 w-full border-b border-blue-500/20 bg-black/90 backdrop-blur-md" role="banner">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
-          <Link href="#home" className="flex items-center space-x-3">
-            <Image
-              src="/favicon.ico"
-              alt={`${settings.siteName} Logo - Automation Solutions`}
-              width={40}
-              height={40}
-              className="rounded-lg animate-float"
-              priority
-            />
-            <span className="text-2xl font-bold gradient-text">{settings.siteName}</span>
-          </Link>
-
-          <nav className="hidden md:flex items-center space-x-8 text-sm font-medium" role="navigation" aria-label="Main navigation">
-            <Link href="#home" className="text-blue-400 font-semibold" aria-label="Đi đến trang chủ">
-              Trang Chủ
-            </Link>
-            <Link href="#services" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Xem dịch vụ của chúng tôi">
-              Dịch Vụ
-            </Link>
-            <Link href="#solutions" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Khám phá giải pháp tự động hóa">
-              Giải Pháp
-            </Link>
-            <Link href="#clients" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Đọc phản hồi khách hàng">
-              Khách Hàng
-            </Link>
-            <Link href="/blog" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Đọc blog và tin tức">
-              Blog
-            </Link>
-            <Link href="#contact" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Liên hệ với chúng tôi">
-              Liên Hệ
-            </Link>
-          </nav>
-
-          <div className="flex items-center gap-4">
-            <Link href="/contact" className="hidden sm:inline-flex cyber-button text-black font-semibold px-6 items-center justify-center rounded-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10" aria-label="Nhận báo giá miễn phí cho dự án tự động hóa">Báo Giá Miễn Phí</Link>
-            
-            <MobileMenu />
-          </div>
-        </div>
-      </header>
+      <Header siteName={settings.siteName} />
 
       <main className="flex-1 relative z-10 pt-16" role="main">
         {/* Hero Section */}
@@ -722,117 +688,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer id="contact" className="w-full border-t border-blue-500/20 bg-black/80" role="contentinfo">
-        <div className="container mx-auto px-4 md:px-6 py-12">
-          <div className="grid gap-8 lg:grid-cols-4">
-            <div className="space-y-4">
-              <div className="flex items-center space-x-3">
-                <Image
-                  src="/favicon.ico"
-                  alt={`${settings.siteName} Logo - Automation Solutions`}
-                  width={40}
-                  height={40}
-                  className="rounded-lg"
-                />
-                <span className="text-2xl font-bold gradient-text">{settings.siteName}</span>
-              </div>
-              <p className="text-sm text-gray-400">{settings.siteDescription}</p>
-              <nav className="flex space-x-4" aria-label="Social Media Links">
-                <Link
-                  href={settings.facebookUrl}
-                  className="text-gray-400 hover:text-blue-400 transition-all duration-300 hover:scale-110 neon-glow"
-                  aria-label={`Theo dõi ${settings.siteName} trên Facebook`}
-                >
-                  <Facebook className="h-6 w-6" aria-hidden="true" />
-                </Link>
-                <Link
-                  href={settings.twitterUrl}
-                  className="text-gray-400 hover:text-blue-400 transition-all duration-300 hover:scale-110 neon-glow"
-                  aria-label={`Theo dõi ${settings.siteName} trên Twitter/X`}
-                >
-                  <XIcon className="h-6 w-6" aria-hidden="true" />
-                </Link>
-                <Link
-                  href={settings.youtubeUrl}
-                  className="text-gray-400 hover:text-blue-400 transition-all duration-300 hover:scale-110 neon-glow"
-                  aria-label={`Subscribe kênh YouTube ${settings.siteName}`}
-                >
-                  <Youtube className="h-6 w-6" aria-hidden="true" />
-                </Link>
-                <Link
-                  href={settings.telegramUrl}
-                  className="text-gray-400 hover:text-blue-400 transition-all duration-300 hover:scale-110 neon-glow"
-                  aria-label={`Liên hệ ${settings.siteName} qua Telegram`}
-                >
-                  <TelegramIcon className="h-6 w-6" aria-hidden="true" />
-                </Link>
-              </nav>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-white">Liên Kết Nhanh</h4>
-              <nav className="flex flex-col space-y-2 text-sm" aria-label="Quick Links">
-                <Link href="/terms" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  Điều Khoản Dịch Vụ
-                </Link>
-                <Link href="/privacy" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  Chính Sách Bảo Mật
-                </Link>
-                <Link href="/docs" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  Tài Liệu
-                </Link>
-                <Link href="/api" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  Tham Khảo API
-                </Link>
-              </nav>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-white">Dịch Vụ</h4>
-              <nav className="flex flex-col space-y-2 text-sm" aria-label="Services">
-                <Link href="/services/trading-bots" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  Bot Giao Dịch
-                </Link>
-                <Link href="/services/mmo-automation" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  Tự Động Hóa MMO
-                </Link>
-                <Link href="/services/discord-bots" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  Bot Discord
-                </Link>
-                <Link href="/services/custom-software" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  Phần Mềm Tùy Chỉnh
-                </Link>
-              </nav>
-            </div>
-
-            <address className="space-y-4 not-italic">
-              <h4 className="text-sm font-semibold text-white">Liên Hệ</h4>
-              <div className="space-y-3 text-sm text-gray-400">
-                <div className="flex items-center space-x-2 group cursor-pointer">
-                  <Mail className="h-4 w-4" aria-hidden="true" />
-                  <a href={`mailto:${settings.contactEmail}`} className="hover:text-blue-400 transition-colors">{settings.contactEmail}</a>
-                  <Copy className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
-                </div>
-                <div className="flex items-center space-x-2">
-                  <TelegramIcon className="h-4 w-4" aria-hidden="true" />
-                  <a href={settings.telegramUrl} className="hover:text-blue-400 transition-colors">{settings.telegramUrl.replace('https://t.me/', '')}</a>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Youtube className="h-4 w-4" aria-hidden="true" />
-                  <a href={settings.youtubeUrl} className="hover:text-blue-400 transition-colors">{settings.youtubeUrl.replace('https://www.youtube.com/', '').replace('https://youtube.com/', '')}</a>
-                </div>
-              </div>
-            </address>
-          </div>
-
-          <div className="mt-8 border-t border-blue-500/20 pt-8 text-center text-sm text-gray-400">
-            <p>
-              &copy; {new Date().getFullYear()} {settings.siteName}. Tất cả quyền được bảo lưu. Được xây dựng với ⚡ tự động hóa.
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer 
+        siteName={settings.siteName}
+        siteDescription={settings.siteDescription}
+        contactEmail={settings.contactEmail}
+        facebookUrl={settings.facebookUrl}
+        twitterUrl={settings.twitterUrl}
+        youtubeUrl={settings.youtubeUrl}
+        telegramUrl={settings.telegramUrl}
+      />
     </div>
   )
 }
