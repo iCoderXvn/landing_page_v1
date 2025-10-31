@@ -28,6 +28,7 @@ import {
   Legend,
   ResponsiveContainer
 } from "recharts";
+import { formatDateWithTimezone, useTimezone, formatTimeDate } from "@/lib/timezone-utils";
 
 interface DashboardStats {
   totalPosts: number;
@@ -66,6 +67,9 @@ export function DashboardOverview() {
   const [trafficSources, setTrafficSources] = useState<TrafficSource[]>([]);
   const [activeVisitors, setActiveVisitors] = useState(0);
   const [loading, setLoading] = useState(true);
+  
+  // Get timezone from admin settings
+  const timezone = useTimezone();
 
   const fetchDashboardData = async () => {
     setLoading(true);
@@ -104,6 +108,29 @@ export function DashboardOverview() {
     const interval = setInterval(fetchDashboardData, 30000);
     return () => clearInterval(interval);
   }, [period]);
+
+  const formatPeriod = (periodStr: string) => {
+    try {
+      const groupBy = period === 'day' ? 'hour' : 'day';
+      
+      if (groupBy === "hour") {
+        // Format: "2024-10-31 14:00" -> convert to timezone and show full time date
+        const dateStr = periodStr.replace(' ', 'T') + ':00.000Z';
+        return formatTimeDate(dateStr, timezone);
+      } else {
+        // Format: "2024-10-31" -> convert to timezone and show date
+        const dateStr = periodStr + 'T12:00:00.000Z';
+        return formatDateWithTimezone(dateStr, timezone, { 
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric'
+        });
+      }
+    } catch (error) {
+      console.error('Error formatting period:', error);
+      return periodStr;
+    }
+  };
 
   const COLORS = ['#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#6366f1'];
 
@@ -220,11 +247,16 @@ export function DashboardOverview() {
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={viewsData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                <XAxis dataKey="period" stroke="#9ca3af" />
+                <XAxis 
+                  dataKey="period" 
+                  stroke="#9ca3af" 
+                  tickFormatter={formatPeriod}
+                />
                 <YAxis stroke="#9ca3af" />
                 <Tooltip
                   contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #374151' }}
                   labelStyle={{ color: '#fff' }}
+                  labelFormatter={formatPeriod}
                 />
                 <Legend />
                 <Line type="monotone" dataKey="views" stroke="#3b82f6" strokeWidth={2} name="Views" />

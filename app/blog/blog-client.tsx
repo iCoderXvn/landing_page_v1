@@ -12,6 +12,7 @@ import { Zap, Play } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { SiteSettings } from "@/lib/settings";
+import { formatDateWithTimezone, useTimezone } from "@/lib/timezone-utils";
 
 interface Topic {
   id: number;
@@ -47,6 +48,9 @@ export function BlogPageClient({ settings }: BlogPageClientProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>("all"); // all, newest, most-visited
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  
+  // Get timezone from admin settings
+  const timezone = useTimezone();
 
   // Generate consistent random colors for topics
   const getTopicColor = (topicId: number) => {
@@ -415,7 +419,7 @@ export function BlogPageClient({ settings }: BlogPageClientProps) {
                       
                       <div className="flex items-center gap-4 text-sm text-gray-500">
                         <time dateTime={new Date(filteredPosts[0].createdAt).toISOString()}>
-                          {new Date(filteredPosts[0].createdAt).toLocaleDateString('vi-VN')}
+                          {formatDateWithTimezone(filteredPosts[0].createdAt, timezone)}
                         </time>
                         {filteredPosts[0].viewCount > 0 && (
                           <>
@@ -480,7 +484,7 @@ export function BlogPageClient({ settings }: BlogPageClientProps) {
 
                       <div className="flex items-center gap-4 text-xs text-gray-500 pt-4 border-t border-gray-800/50">
                         <time dateTime={new Date(post.createdAt).toISOString()}>
-                          {new Date(post.createdAt).toLocaleDateString('vi-VN')}
+                          {formatDateWithTimezone(post.createdAt, timezone)}
                         </time>
                         {post.viewCount > 0 && (
                           <>

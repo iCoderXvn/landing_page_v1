@@ -50,6 +50,7 @@ import {
 } from "lucide-react";
 import { AdminSidebar } from "@/components/admin-sidebar";
 import { useRouter } from "next/navigation";
+import { formatDateWithTimezone, useTimezone, formatTimeDate } from "@/lib/timezone-utils";
 
 interface User {
   id: number;
@@ -69,6 +70,9 @@ export default function UsersPage() {
   const [showResetDialog, setShowResetDialog] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
+  // Get timezone from admin settings
+  const timezone = useTimezone();
 
   // Form states
   const [newUsername, setNewUsername] = useState("");
@@ -264,8 +268,7 @@ export default function UsersPage() {
   };
 
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
+    return formatDateWithTimezone(dateString, timezone, {
       year: "numeric",
       month: "short",
       day: "numeric",
@@ -276,9 +279,33 @@ export default function UsersPage() {
 
   const formatLastLogin = (dateString: string | null) => {
     if (!dateString) return "Never";
-    const date = new Date(dateString);
+    
+    // Parse the date string as UTC and get timezone-aware current time
+    const date = new Date(dateString + (dateString.includes('Z') ? '' : 'Z')); // Ensure UTC parsing
     const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
+    
+    // Convert both dates to the configured timezone for accurate comparison
+    const formattedDate = formatDateWithTimezone(date, timezone, { 
+      year: 'numeric', 
+      month: '2-digit', 
+      day: '2-digit', 
+      hour: '2-digit', 
+      minute: '2-digit', 
+      second: '2-digit' 
+    });
+    const formattedNow = formatDateWithTimezone(now, timezone, { 
+      year: 'numeric', 
+      month: '2-digit', 
+      day: '2-digit', 
+      hour: '2-digit', 
+      minute: '2-digit', 
+      second: '2-digit' 
+    });
+    
+    // Parse the formatted strings back to dates for comparison
+    const timezoneDate = new Date(formattedDate);
+    const timezoneNow = new Date(formattedNow);
+    const diffMs = timezoneNow.getTime() - timezoneDate.getTime();
     const diffMins = Math.floor(diffMs / 60000);
     const diffHours = Math.floor(diffMs / 3600000);
     const diffDays = Math.floor(diffMs / 86400000);
@@ -287,7 +314,13 @@ export default function UsersPage() {
     if (diffMins < 60) return `${diffMins}m ago`;
     if (diffHours < 24) return `${diffHours}h ago`;
     if (diffDays < 7) return `${diffDays}d ago`;
-    return formatDate(dateString);
+    return formatDateWithTimezone(date, timezone, {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
   };
 
   const handleLogout = () => {

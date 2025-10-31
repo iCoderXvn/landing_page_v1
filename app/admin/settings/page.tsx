@@ -9,6 +9,14 @@ export default function SettingsPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  const handleLogout = () => {
+    // Clear authentication tokens
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("adminSession");
+    // Redirect to login page
+    router.push("/admin");
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     const session = localStorage.getItem("adminSession");
@@ -36,7 +44,7 @@ export default function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      <AdminSidebar />
+      <AdminSidebar onLogout={handleLogout} />
       <AdminSettingsForm />
     </div>
   );

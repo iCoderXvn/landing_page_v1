@@ -422,13 +422,15 @@ export function AdminSettingsForm() {
               <h1 className="text-3xl font-bold text-white">Settings</h1>
               <p className="text-gray-400 mt-1">Manage your site configuration</p>
             </div>
-            <Button
-              onClick={handleSave}
-              disabled={saving}
-              className="bg-blue-600 hover:bg-blue-700"
-            >
-              {saving ? "Saving..." : "Save Changes"}
-            </Button>
+            <div className="flex items-center gap-3">
+              <Button
+                onClick={handleSave}
+                disabled={saving}
+                className="bg-blue-600 hover:bg-blue-700"
+              >
+                {saving ? "Saving..." : "Save Changes"}
+              </Button>
+            </div>
           </div>
 
           {showSuccess && (

@@ -9,6 +9,7 @@ import { Footer } from "@/components/footer";
 import { BreadcrumbBar } from '@/components/breadcrumb-bar'
 import { VideoPlayer, isVideoUrl } from "@/components/video-player";
 import { AnalyticsTracker } from "@/components/analytics-tracker";
+import { useTimezone, formatDateWithTimezone } from "@/lib/timezone-utils";
 import Link from "next/link";
 import Image from "next/image";
 import type { SiteSettings } from "@/lib/settings";
@@ -76,6 +77,7 @@ export function BlogDetailClient({ settings, postId }: BlogDetailClientProps) {
   const [copied, setCopied] = useState(false);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const prevContentRef = useRef<string>('');
+  const timezone = useTimezone();
 
   useEffect(() => {
     if (postId) {
@@ -373,11 +375,7 @@ export function BlogDetailClient({ settings, postId }: BlogDetailClientProps) {
                   <div className="flex items-center gap-4 text-gray-400 flex-wrap">
                     <span className="flex items-center gap-1 text-sm">
                       <Clock className="w-4 h-4" />
-                      {new Date(post.createdAt).toLocaleDateString('vi-VN', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                      })}
+                      {formatDateWithTimezone(post.createdAt, timezone)}
                     </span>
                     {post.viewCount > 0 && (
                       <span className="flex items-center gap-1 text-sm text-blue-400">
@@ -495,7 +493,7 @@ export function BlogDetailClient({ settings, postId }: BlogDetailClientProps) {
                             <div className="flex items-center gap-4 text-sm text-gray-400">
                               <span className="flex items-center gap-1">
                                 <Clock className="w-3 h-3" />
-                                {new Date(relatedPost.createdAt).toLocaleDateString('vi-VN')}
+                                {formatDateWithTimezone(relatedPost.createdAt, timezone)}
                               </span>
                               {relatedPost.viewCount > 0 && (
                                 <span className="flex items-center gap-1">
@@ -726,7 +724,7 @@ export function BlogDetailClient({ settings, postId }: BlogDetailClientProps) {
                                   <span className="flex items-center gap-1.5 px-2 py-1 bg-gray-800/50 rounded-md">
                                     <Clock className="w-3 h-3 text-green-400" />
                                     <span className="text-green-400 font-medium">
-                                      {new Date(newestPost.createdAt).toLocaleDateString('vi-VN')}
+                                      {formatDateWithTimezone(newestPost.createdAt, timezone)}
                                     </span>
                                   </span>
                                   {newestPost.viewCount > 0 && (

@@ -38,6 +38,7 @@ import {
 import { AdminSidebar } from "@/components/admin-sidebar";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { formatDateWithTimezone, useTimezone } from "@/lib/timezone-utils";
 
 interface Topic {
   id: number;
@@ -74,6 +75,9 @@ export default function PostsManagementPage() {
   const [selectedPosts, setSelectedPosts] = useState<Set<number>>(new Set());
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  
+  // Get timezone from admin settings
+  const timezone = useTimezone();
 
   useEffect(() => {
     fetchData();
@@ -510,7 +514,7 @@ export default function PostsManagementPage() {
                               {post.viewCount.toLocaleString()}
                             </TableCell>
                             <TableCell className="text-gray-400 text-sm">
-                              {new Date(post.createdAt).toLocaleDateString('en-US', {
+                              {formatDateWithTimezone(post.createdAt, timezone, {
                                 month: 'short',
                                 day: 'numeric',
                                 year: 'numeric'

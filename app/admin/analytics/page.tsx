@@ -38,6 +38,7 @@ import {
 } from "lucide-react";
 import { AdminSidebar } from "@/components/admin-sidebar";
 import { useRouter } from "next/navigation";
+import { formatDateWithTimezone, useTimezone, formatTimeDate } from "@/lib/timezone-utils";
 
 interface DashboardStats {
   totalPosts: number;
@@ -66,6 +67,10 @@ export default function AnalyticsPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [period, setPeriod] = useState<"day" | "week" | "month" | "year">("week");
+  
+  // Get timezone from admin settings
+  const timezone = useTimezone();
+  
   const [dashboardStats, setDashboardStats] = useState<DashboardStats>({
     totalPosts: 0,
     totalViews: 0,
@@ -129,10 +134,35 @@ export default function AnalyticsPage() {
   };
 
   const formatPeriod = (period: string, groupBy: string) => {
-    if (groupBy === "hour") {
-      return period.split(" ")[1] || period;
+    try {
+      // Handle different period formats from the API
+      if (groupBy === "hour") {
+        // Format: "2024-10-31 14:00" -> convert to timezone and show full time date for tooltip
+        const dateStr = period.replace(' ', 'T') + ':00.000Z'; // Convert to ISO format
+        return formatTimeDate(dateStr, timezone);
+      } else if (groupBy === "day") {
+        // Format: "2024-10-31" -> convert to timezone and show date
+        const dateStr = period + 'T12:00:00.000Z'; // Convert to ISO format with noon time
+        return formatDateWithTimezone(dateStr, timezone, { 
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric'
+        });
+      } else if (groupBy === "week") {
+        // Format: "2024-W44" -> show week info
+        return period; // Keep as is for now, can be enhanced later
+      } else if (groupBy === "month") {
+        // Format: "2024-10" -> convert to timezone and show month
+        const dateStr = period + '-01T00:00:00.000Z'; // Convert to ISO format
+        return formatDateWithTimezone(dateStr, timezone, { 
+          year: 'numeric', 
+          month: 'short' 
+        });
+      }
+    } catch (error) {
+      console.error('Error formatting period:', error);
     }
-    return period;
+    return period; // Fallback to original format
   };
 
   const handleLogout = () => {
@@ -324,6 +354,7 @@ export default function AnalyticsPage() {
                               borderRadius: "0.5rem",
                               color: "#fff",
                             }}
+                            labelFormatter={(value) => formatPeriod(value, getGroupBy(period))}
                           />
                           <Legend />
                           <Area

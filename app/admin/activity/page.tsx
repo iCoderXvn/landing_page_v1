@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { AdminSidebar } from "@/components/admin-sidebar";
 import { useRouter } from "next/navigation";
+import { formatDateWithTimezone, useTimezone, formatTimeDate } from '@/lib/timezone-utils';
 
 interface RecentActivity {
   id: number;
@@ -59,6 +60,7 @@ export default function ActivityPage() {
   });
   const [recentActivity, setRecentActivity] = useState<RecentActivity[]>([]);
   const [autoRefresh, setAutoRefresh] = useState(true);
+  const timezone = useTimezone();
 
   useEffect(() => {
     fetchData();
@@ -111,9 +113,32 @@ export default function ActivityPage() {
   };
 
   const formatTimeAgo = (dateString: string) => {
-    const date = new Date(dateString);
+    // Parse the date string as UTC and get timezone-aware current time
+    const date = new Date(dateString + (dateString.includes('Z') ? '' : 'Z')); // Ensure UTC parsing
     const now = new Date();
-    const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+    
+    // Convert both dates to the configured timezone for accurate comparison
+    const formattedDate = formatDateWithTimezone(date, timezone, { 
+      year: 'numeric', 
+      month: '2-digit', 
+      day: '2-digit', 
+      hour: '2-digit', 
+      minute: '2-digit', 
+      second: '2-digit' 
+    });
+    const formattedNow = formatDateWithTimezone(now, timezone, { 
+      year: 'numeric', 
+      month: '2-digit', 
+      day: '2-digit', 
+      hour: '2-digit', 
+      minute: '2-digit', 
+      second: '2-digit' 
+    });
+    
+    // Parse the formatted strings back to dates for comparison
+    const timezoneDate = new Date(formattedDate);
+    const timezoneNow = new Date(formattedNow);
+    const seconds = Math.floor((timezoneNow.getTime() - timezoneDate.getTime()) / 1000);
 
     if (seconds < 60) return 'Just now';
     if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;

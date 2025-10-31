@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Eye, Clock, ArrowRight } from "lucide-react"
 import Link from "next/link"
+import { formatDateWithTimezone, useTimezone } from "@/lib/timezone-utils"
 
 interface Post {
   id: number
@@ -27,6 +28,9 @@ export function BlogSections({ className }: BlogSectionsProps) {
   const [newestPosts, setNewestPosts] = useState<Post[]>([])
   const [mostVisitedPosts, setMostVisitedPosts] = useState<Post[]>([])
   const [loading, setLoading] = useState(true)
+  
+  // Get timezone from admin settings
+  const timezone = useTimezone()
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -70,12 +74,7 @@ export function BlogSections({ className }: BlogSectionsProps) {
   }, [])
 
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
-    return date.toLocaleDateString('vi-VN', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    })
+    return formatDateWithTimezone(dateString, timezone)
   }
 
   const truncateContent = (content: string, maxLength: number = 150) => {

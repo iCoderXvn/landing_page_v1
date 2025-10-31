@@ -41,6 +41,7 @@ import {
 } from "lucide-react";
 import { AdminSidebar } from "@/components/admin-sidebar";
 import { useRouter } from "next/navigation";
+import { formatDateWithTimezone, useTimezone } from "@/lib/timezone-utils";
 
 interface Topic {
   id: number;
@@ -72,6 +73,9 @@ const COLOR_PRESETS = [
 
 export default function TopicsManagementPage() {
   const router = useRouter();
+  
+  // Get timezone from admin settings
+  const timezone = useTimezone();
   const [topics, setTopics] = useState<Topic[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -413,7 +417,7 @@ export default function TopicsManagementPage() {
                               </Badge>
                             </TableCell>
                             <TableCell className="text-gray-400 text-sm">
-                              {new Date(topic.createdAt).toLocaleDateString("en-US", {
+                              {formatDateWithTimezone(topic.createdAt, timezone, {
                                 month: "short",
                                 day: "numeric",
                                 year: "numeric",

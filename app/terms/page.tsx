@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { generatePageMetadata } from '@/lib/settings'
+import { getSiteSettings, generatePageMetadata } from '@/lib/settings'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { BinaryRain } from '@/components/binary-rain'
