@@ -59,7 +59,7 @@ export default function MMOAutomationPage() {
       <BreadcrumbBar
         items={[
           { name: 'Trang Chủ', href: '/' },
-          { name: 'Dịch Vụ', href: '/#services' },
+          { name: 'Dịch Vụ', href: '/services' },
           { name: 'Bot MMO & Tự Động Hóa Game', href: '/services/mmo-automation' },
         ]}
       />

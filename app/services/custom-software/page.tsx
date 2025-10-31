@@ -59,7 +59,7 @@ export default function CustomSoftwarePage() {
       <BreadcrumbBar
         items={[
           { name: 'Trang Chủ', href: '/' },
-          { name: 'Dịch Vụ', href: '/#services' },
+          { name: 'Dịch Vụ', href: '/services' },
           { name: 'Phần Mềm Tùy Chỉnh', href: '/services/custom-software' },
         ]}
       />

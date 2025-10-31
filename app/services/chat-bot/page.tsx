@@ -57,7 +57,7 @@ export default function ChatBotPage() {
       <BreadcrumbBar
         items={[
           { name: 'Trang Chủ', href: '/' },
-          { name: 'Dịch Vụ', href: '/#services' },
+          { name: 'Dịch Vụ', href: '/services' },
           { name: 'Chat Bot Thông Minh', href: '/services/chat-bot' },
         ]}
       />

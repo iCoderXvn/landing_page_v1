@@ -30,7 +30,7 @@ export function Header({ siteName }: HeaderProps) {
           <Link href="/about" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Về chúng tôi">
             Về Chúng Tôi
           </Link>
-          <Link href="/#services" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Xem dịch vụ của chúng tôi">
+          <Link href="/services" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Xem dịch vụ của chúng tôi">
             Dịch Vụ
           </Link>
           <Link href="/docs" className="text-gray-300 hover:text-blue-400 transition-colors" aria-label="Tài liệu hướng dẫn">

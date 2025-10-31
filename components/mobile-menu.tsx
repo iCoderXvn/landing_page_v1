@@ -37,7 +37,7 @@ export function MobileMenu() {
               Về Chúng Tôi
             </Link>
             <Link 
-              href="/#services" 
+              href="/services" 
               className="text-gray-300 hover:text-blue-400 py-2 px-2 rounded transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >

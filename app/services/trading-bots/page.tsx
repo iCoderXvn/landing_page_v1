@@ -58,7 +58,7 @@ export default function TradingBotsPage() {
       <BreadcrumbBar
         items={[
           { name: 'Trang Chủ', href: '/' },
-          { name: 'Dịch Vụ', href: '/#services' },
+          { name: 'Dịch Vụ', href: '/services' },
           { name: 'Bot Giao Dịch Crypto', href: '/services/trading-bots' },
         ]}
       />

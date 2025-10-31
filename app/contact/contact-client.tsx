@@ -56,7 +56,7 @@ export function ContactClient({ settings }: ContactClientProps) {
         ]}
       />
 
-      <main className="flex-1 relative z-10 py-20" role="main">
+      <main className="flex-1 relative z-10 pt-32 pb-20" role="main">
         <div className="container mx-auto px-4 md:px-6">
           {/* Hero Section */}
           <section className="text-center mb-16">

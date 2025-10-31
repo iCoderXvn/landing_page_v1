@@ -273,6 +273,17 @@ export default function HomePage() {
                 </CardContent>
               </Card>
             </div>
+            
+            {/* View All Services Button */}
+            <div className="text-center mt-16">
+              <Link 
+                href="/services" 
+                className="inline-flex items-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+              >
+                Xem Tất Cả Dịch Vụ
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </div>
           </div>
         </section>
 
