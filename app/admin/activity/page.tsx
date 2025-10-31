@@ -29,10 +29,10 @@ interface RecentActivity {
   id: number;
   pagePath: string;
   postTitle?: string;
-  deviceType: string;
-  browser: string;
-  os: string;
-  country: string;
+  deviceType?: string;
+  browser?: string;
+  os?: string;
+  country?: string;
   createdAt: string;
 }
 
@@ -101,7 +101,7 @@ export default function ActivityPage() {
     }
   };
 
-  const getDeviceIcon = (deviceType: string) => {
+  const getDeviceIcon = (deviceType?: string) => {
     switch (deviceType?.toLowerCase()) {
       case 'mobile':
         return <Smartphone className="w-4 h-4" />;
@@ -113,37 +113,31 @@ export default function ActivityPage() {
   };
 
   const formatTimeAgo = (dateString: string) => {
-    // Parse the date string as UTC and get timezone-aware current time
-    const date = new Date(dateString + (dateString.includes('Z') ? '' : 'Z')); // Ensure UTC parsing
-    const now = new Date();
-    
-    // Convert both dates to the configured timezone for accurate comparison
-    const formattedDate = formatDateWithTimezone(date, timezone, { 
-      year: 'numeric', 
-      month: '2-digit', 
-      day: '2-digit', 
-      hour: '2-digit', 
-      minute: '2-digit', 
-      second: '2-digit' 
-    });
-    const formattedNow = formatDateWithTimezone(now, timezone, { 
-      year: 'numeric', 
-      month: '2-digit', 
-      day: '2-digit', 
-      hour: '2-digit', 
-      minute: '2-digit', 
-      second: '2-digit' 
-    });
-    
-    // Parse the formatted strings back to dates for comparison
-    const timezoneDate = new Date(formattedDate);
-    const timezoneNow = new Date(formattedNow);
-    const seconds = Math.floor((timezoneNow.getTime() - timezoneDate.getTime()) / 1000);
-
-    if (seconds < 60) return 'Just now';
-    if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
-    if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
-    return `${Math.floor(seconds / 86400)}d ago`;
+    try {
+      if (!dateString) return 'Unknown';
+      
+      // Parse the date string as UTC
+      const date = new Date(dateString + (dateString.includes('Z') ? '' : 'Z'));
+      const now = new Date();
+      
+      // Check if date is valid
+      if (isNaN(date.getTime())) {
+        console.error('Invalid date:', dateString);
+        return 'Unknown';
+      }
+      
+      // Simple time difference calculation
+      const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+      
+      if (isNaN(seconds)) return 'Unknown';
+      if (seconds < 60) return 'Just now';
+      if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
+      if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+      return `${Math.floor(seconds / 86400)}d ago`;
+    } catch (error) {
+      console.error('Error formatting time ago:', error);
+      return 'Unknown';
+    }
   };
 
   const formatTime = (seconds: number) => {
@@ -370,14 +364,14 @@ export default function ActivityPage() {
                               <div className="flex items-center gap-2">
                                 {getDeviceIcon(activity.deviceType)}
                                 <span className="text-gray-300 capitalize">
-                                  {activity.deviceType || 'Unknown'}
+                                  {activity.deviceType && activity.deviceType.trim() !== '' ? activity.deviceType : 'Unknown'}
                                 </span>
                               </div>
                             </TableCell>
                             <TableCell>
                               <div className="text-gray-300">
-                                {activity.browser || 'Unknown'}
-                                {activity.os && (
+                                {activity.browser && activity.browser.trim() !== '' ? activity.browser : 'Unknown'}
+                                {activity.os && activity.os.trim() !== '' && (
                                   <span className="text-gray-500 text-sm ml-1">
                                     ({activity.os})
                                   </span>
@@ -387,7 +381,7 @@ export default function ActivityPage() {
                             <TableCell>
                               <div className="flex items-center gap-2 text-gray-300">
                                 <Globe className="w-4 h-4 text-gray-400" />
-                                {activity.country || 'Unknown'}
+                                {activity.country && activity.country.trim() !== '' ? activity.country : 'Vietnam'}
                               </div>
                             </TableCell>
                             <TableCell className="text-right">

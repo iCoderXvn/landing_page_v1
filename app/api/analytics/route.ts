@@ -2,6 +2,38 @@ import { NextRequest, NextResponse } from 'next/server';
 import { analyticsOperations } from '@/lib/database';
 import crypto from 'crypto';
 
+// Helper function to get country from request headers
+function getCountryFromHeaders(headers: Headers): string {
+  // Try to get country from CF-IPCountry header (Cloudflare)
+  const cfCountry = headers.get('cf-ipcountry');
+  if (cfCountry && cfCountry !== 'XX') {
+    return cfCountry;
+  }
+
+  // Try to get country from X-Country header (some CDNs)
+  const xCountry = headers.get('x-country');
+  if (xCountry) {
+    return xCountry;
+  }
+
+  // Try to determine from Accept-Language header
+  const acceptLanguage = headers.get('accept-language');
+  if (acceptLanguage) {
+    if (acceptLanguage.includes('vi-VN') || acceptLanguage.includes('vi')) {
+      return 'Vietnam';
+    }
+    if (acceptLanguage.includes('en-US')) {
+      return 'United States';
+    }
+    if (acceptLanguage.includes('en-GB')) {
+      return 'United Kingdom';
+    }
+  }
+
+  // Default to Vietnam for Vietnamese website
+  return 'Vietnam';
+}
+
 // Helper function to hash IP address
 function hashIP(ip: string): string {
   return crypto.createHash('sha256').update(ip + process.env.IP_SALT || 'default-salt').digest('hex');
@@ -54,6 +86,9 @@ export async function POST(request: NextRequest) {
     // Get referrer
     const referrer = request.headers.get('referer') || '';
 
+    // Get country from headers
+    const country = getCountryFromHeaders(request.headers);
+
     // Track page view
     analyticsOperations.trackPageView({
       pagePath,
@@ -64,7 +99,8 @@ export async function POST(request: NextRequest) {
       referrer,
       deviceType,
       browser,
-      os
+      os,
+      country
     });
 
     // Update visitor session
