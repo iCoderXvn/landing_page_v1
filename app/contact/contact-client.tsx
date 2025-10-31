@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { BinaryRain } from "@/components/binary-rain"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { BreadcrumbSchema } from "@/components/breadcrumb-schema"
+import { BreadcrumbBar } from "@/components/breadcrumb-bar"
 import type { SiteSettings } from "@/lib/settings";
 import {
   MessageSquare,
@@ -29,9 +29,13 @@ const TelegramIcon = ({ className }: { className?: string }) => (
 )
 
 const ZaloIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.568 8.16c-.169-.256-.408-.447-.692-.554-.284-.107-.59-.107-.874 0-.284.107-.523.298-.692.554l-1.405 2.134-1.405-2.134c-.169-.256-.408-.447-.692-.554-.284-.107-.59-.107-.874 0-.284.107-.523.298-.692.554-.169.256-.169.576 0 .832l2.097 3.201v3.674c0 .332.132.65.367.884.234.235.553.367.885.367.332 0 .65-.132.885-.367.234-.235.367-.552.367-.884v-3.674l2.097-3.201c.169-.256.169-.576 0-.832z"/>
-  </svg>
+  <Image
+    src="/zalo.png"
+    alt="Zalo"
+    width={32}
+    height={32}
+    className={className}
+  />
 )
 
 interface ContactClientProps {
@@ -44,14 +48,13 @@ export function ContactClient({ settings }: ContactClientProps) {
       <BinaryRain />
       <Header siteName={settings.siteName} />
 
-      {/* Breadcrumbs */}
-      <div className="relative z-10 pt-20 bg-black/80 border-b border-blue-500/20">
-        <BreadcrumbSchema
-          items={[
-            { name: 'Liên Hệ', href: '/contact' }
-          ]}
-        />
-      </div>
+      {/* Breadcrumbs with Ticker */}
+      <BreadcrumbBar
+        items={[
+          { name: 'Trang Chủ', href: '/' },
+          { name: 'Liên Hệ', href: '/contact' }
+        ]}
+      />
 
       <main className="flex-1 relative z-10 py-20" role="main">
         <div className="container mx-auto px-4 md:px-6">
