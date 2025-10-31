@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
-import { getSiteSettings } from '@/lib/settings'
+import { getSiteSettings, generatePageMetadata } from '@/lib/settings'
+import { generateServicePageStructuredData, generateBreadcrumbStructuredData } from '@/lib/structured-data'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -34,20 +35,46 @@ import {
 import Link from 'next/link'
 
 export function generateMetadata(): Metadata {
-  const settings = getSiteSettings()
-
-  return {
-    title: `Bot Giao Dịch Crypto - Trading Bot AI | ${settings.siteName}`,
-    description: 'Phát triển bot giao dịch crypto tự động với AI, thuật toán trading thông minh, backtest, quản lý rủi ro. Hỗ trợ Binance, Bybit, OKX. Bot trading 24/7 với ROI tối ưu.',
-    keywords: 'bot giao dịch crypto, crypto trading bot, bot trading tự động, thuật toán trading, AI trading bot, bot Binance, bot Bybit, automated trading, algorithmic trading, crypto bot development, DCA bot, grid trading bot, arbitrage bot, market making bot',
-    alternates: {
-      canonical: `${settings.siteUrl}/services/trading-bots`,
-    },
-  }
+  return generatePageMetadata(
+    "/services/trading-bots",
+    "Bot Giao Dịch Crypto Tự Động - Trading Bot AI | iCoderX",
+    "Phát triển bot giao dịch crypto tự động với AI, thuật toán trading thông minh, backtest, quản lý rủi ro. Hỗ trợ Binance, Bybit, OKX. Bot trading 24/7 với ROI tối ưu."
+  )
 }
 
 export default function TradingBotsPage() {
   const settings = getSiteSettings()
+
+  // Generate structured data for this service
+  const serviceStructuredData = generateServicePageStructuredData({
+    name: "Bot Giao Dịch Crypto Tự Động",
+    description: "Phát triển bot giao dịch crypto tự động với AI, thuật toán trading thông minh, backtest, quản lý rủi ro. Hỗ trợ Binance, Bybit, OKX. Bot trading 24/7 với ROI tối ưu.",
+    url: `${settings.siteUrl}/services/trading-bots`,
+    category: "Phát Triển Phần Mềm",
+    features: [
+      "Bot Giao Dịch Tự Động", 
+      "Thuật Toán AI Trading",
+      "Bot Binance & Bybit",
+      "DCA Bot Strategy",
+      "Grid Trading Bot",
+      "Arbitrage Bot",
+      "Quản Lý Rủi Ro",
+      "Backtest & Optimization"
+    ],
+    vietnameseKeywords: [
+      "bot giao dịch crypto", "crypto trading bot", "bot trading tự động", 
+      "thuật toán trading", "AI trading bot", "bot Binance", "bot Bybit",
+      "automated trading", "algorithmic trading", "crypto bot development",
+      "DCA bot", "grid trading bot", "arbitrage bot", "market making bot",
+      "bot giao dịch tự động", "phần mềm trading", "robot trading crypto"
+    ]
+  })
+
+  const breadcrumbStructuredData = generateBreadcrumbStructuredData([
+    { name: 'Trang Chủ', href: settings.siteUrl },
+    { name: 'Dịch Vụ', href: `${settings.siteUrl}/services` },
+    { name: 'Bot Giao Dịch Crypto', href: `${settings.siteUrl}/services/trading-bots` },
+  ])
 
   return (
     <div className="flex flex-col min-h-screen relative w-full overflow-x-hidden">
@@ -612,6 +639,16 @@ export default function TradingBotsPage() {
         twitterUrl={settings.twitterUrl}
         youtubeUrl={settings.youtubeUrl}
         telegramUrl={settings.telegramUrl}
+      />
+
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceStructuredData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
       />
     </div>
   )

@@ -28,20 +28,15 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { getSiteSettings } from "@/lib/settings"
+import { getSiteSettings, generatePageMetadata } from "@/lib/settings"
 
 // Generate metadata for homepage
 export function generateMetadata(): Metadata {
-  const settings = getSiteSettings()
-  
-  return {
-    title: settings.siteTitle || `${settings.siteName} - Giải Pháp Tự Động Hóa Chuyên Nghiệp`,
-    description: settings.defaultMetaDescription,
-    keywords: settings.defaultKeywords,
-    alternates: {
-      canonical: settings.siteUrl || 'https://icoderx.vn',
-    },
-  }
+  return generatePageMetadata(
+    "/",
+    "iCoderX - Giải Pháp Tự Động Hóa Chuyên Nghiệp",
+    "Chuyên lập trình bot, code bot theo yêu cầu, viết bot web tự động, tool MMO auto, bot Facebook/Telegram/AI. Dịch vụ viết bot crypto, tool automation, phần mềm tự động hóa, RPA. Thuê code tool auto, bot web scraping, tool auto click. 100+ dự án thành công."
+  )
 }
 
 // Custom Telegram icon as SVG component

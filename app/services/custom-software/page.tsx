@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
-import { getSiteSettings } from '@/lib/settings'
+import { getSiteSettings, generatePageMetadata } from '@/lib/settings'
+import { generateServicePageStructuredData, generateBreadcrumbStructuredData } from '@/lib/structured-data'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { BinaryRain } from '@/components/binary-rain'
@@ -35,20 +36,46 @@ import {
 import Link from 'next/link'
 
 export function generateMetadata(): Metadata {
-  const settings = getSiteSettings()
-
-  return {
-    title: `Phần Mềm Tùy Chỉnh - Custom Software Development | ${settings.siteName}`,
-    description: 'Phát triển phần mềm tùy chỉnh theo yêu cầu: Web App, Mobile App, Desktop App, API, SaaS. Giải pháp công nghệ toàn diện cho doanh nghiệp từ Startup đến Enterprise.',
-    keywords: 'phần mềm tùy chỉnh, custom software development, lập trình theo yêu cầu, web application development, mobile app development, desktop software, SaaS development, API development, enterprise software, startup tech solution, phát triển ứng dụng, thiết kế phần mềm, tư vấn công nghệ, outsourcing development, offshore development',
-    alternates: {
-      canonical: `${settings.siteUrl}/services/custom-software`,
-    },
-  }
+  return generatePageMetadata(
+    "/services/custom-software",
+    "Phần Mềm Tùy Chỉnh Theo Yêu Cầu - Custom Software Development | iCoderX",
+    "Phát triển phần mềm tùy chỉnh theo yêu cầu: Web App, Mobile App, Desktop App, API, SaaS. Giải pháp công nghệ toàn diện cho doanh nghiệp từ Startup đến Enterprise."
+  )
 }
 
 export default function CustomSoftwarePage() {
   const settings = getSiteSettings()
+
+  // Generate structured data for this service
+  const serviceStructuredData = generateServicePageStructuredData({
+    name: "Phần Mềm Tùy Chỉnh Theo Yêu Cầu",
+    description: "Phát triển phần mềm tùy chỉnh theo yêu cầu: Web App, Mobile App, Desktop App, API, SaaS. Giải pháp công nghệ toàn diện cho doanh nghiệp từ Startup đến Enterprise.",
+    url: `${settings.siteUrl}/services/custom-software`,
+    category: "Phát Triển Phần Mềm",
+    features: [
+      "Web Application Development",
+      "Mobile App Development", 
+      "Desktop Software Development",
+      "API & Backend Development",
+      "SaaS Platform Development",
+      "Enterprise Software Solutions",
+      "Database Design & Development",
+      "System Integration"
+    ],
+    vietnameseKeywords: [
+      "phần mềm tùy chỉnh", "custom software development", "lập trình theo yêu cầu",
+      "web application development", "mobile app development", "desktop software",
+      "SaaS development", "API development", "enterprise software", "startup tech solution", 
+      "phát triển ứng dụng", "thiết kế phần mềm", "tư vấn công nghệ", "outsourcing development",
+      "phần mềm doanh nghiệp", "ứng dụng web", "ứng dụng mobile", "hệ thống quản lý"
+    ]
+  })
+
+  const breadcrumbStructuredData = generateBreadcrumbStructuredData([
+    { name: 'Trang Chủ', href: settings.siteUrl },
+    { name: 'Dịch Vụ', href: `${settings.siteUrl}/services` },
+    { name: 'Phần Mềm Tùy Chỉnh', href: `${settings.siteUrl}/services/custom-software` },
+  ])
 
   return (
     <div className="flex flex-col min-h-screen relative w-full overflow-x-hidden">
@@ -607,6 +634,16 @@ export default function CustomSoftwarePage() {
         twitterUrl={settings.twitterUrl}
         youtubeUrl={settings.youtubeUrl}
         telegramUrl={settings.telegramUrl}
+      />
+
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceStructuredData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
       />
     </div>
   )

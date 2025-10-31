@@ -1,4 +1,6 @@
 import { settingsOperations } from './database';
+import fs from 'fs';
+import path from 'path';
 
 export interface SiteSettings {
   // Site Information
@@ -34,10 +36,32 @@ export interface SiteSettings {
   timezone: string;
 }
 
+export interface PageSEO {
+  id: string;
+  path: string;
+  title: string;
+  description: string;
+  keywords: string;
+  ogTitle: string;
+  ogDescription: string;
+  ogImage: string;
+  canonical: string;
+  priority: string;
+  changefreq: string;
+  noindex: boolean;
+  nofollow: boolean;
+}
+
 // In-memory cache for settings
 let settingsCache: SiteSettings | null = null;
 let cacheTimestamp: number = 0;
 const CACHE_TTL = 60000; // 1 minute cache
+
+// Page SEO cache
+let pageSEOCache: PageSEO[] | null = null;
+let pageSEOCacheTimestamp: number = 0;
+
+const PAGE_SEO_FILE = path.join(process.cwd(), 'data', 'page-seo.json');
 
 /**
  * Clear the settings cache (call this when settings are updated)
@@ -45,6 +69,8 @@ const CACHE_TTL = 60000; // 1 minute cache
 export function clearSettingsCache(): void {
   settingsCache = null;
   cacheTimestamp = 0;
+  pageSEOCache = null;
+  pageSEOCacheTimestamp = 0;
 }
 
 /**
@@ -109,4 +135,115 @@ export function getSiteSettings(useCache: boolean = true): SiteSettings {
  */
 export function getSetting(key: string, defaultValue: string = ''): string {
   return settingsOperations.get(key) || defaultValue;
+}
+
+/**
+ * Load page SEO data from file
+ */
+function loadPageSEOData(): PageSEO[] {
+  try {
+    if (fs.existsSync(PAGE_SEO_FILE)) {
+      const data = fs.readFileSync(PAGE_SEO_FILE, 'utf8');
+      return JSON.parse(data);
+    }
+  } catch (error) {
+    console.error('Error loading page SEO data:', error);
+  }
+  return [];
+}
+
+/**
+ * Get all page SEO configurations with caching
+ */
+export function getAllPageSEO(useCache: boolean = true): PageSEO[] {
+  const now = Date.now();
+  if (useCache && pageSEOCache && (now - pageSEOCacheTimestamp) < CACHE_TTL) {
+    return pageSEOCache;
+  }
+
+  const pageSEOData = loadPageSEOData();
+  
+  if (useCache) {
+    pageSEOCache = pageSEOData;
+    pageSEOCacheTimestamp = now;
+  }
+  
+  return pageSEOData;
+}
+
+/**
+ * Get page-specific SEO settings for a given path
+ */
+export function getPageSEO(pagePath: string): PageSEO | null {
+  const allPageSEO = getAllPageSEO();
+  return allPageSEO.find(page => page.path === pagePath) || null;
+}
+
+/**
+ * Generate metadata for a page using page-specific SEO or fallback to defaults
+ */
+export function generatePageMetadata(pagePath: string, fallbackTitle?: string, fallbackDescription?: string) {
+  const siteSettings = getSiteSettings();
+  const pageSEO = getPageSEO(pagePath);
+  
+  if (pageSEO) {
+    return {
+      title: pageSEO.title || fallbackTitle || siteSettings.siteTitle,
+      description: pageSEO.description || fallbackDescription || siteSettings.defaultMetaDescription,
+      keywords: pageSEO.keywords || siteSettings.defaultKeywords,
+      alternates: {
+        canonical: pageSEO.canonical || `${siteSettings.siteUrl}${pagePath}`,
+      },
+      openGraph: {
+        title: pageSEO.ogTitle || pageSEO.title || fallbackTitle || siteSettings.siteTitle,
+        description: pageSEO.ogDescription || pageSEO.description || fallbackDescription || siteSettings.defaultMetaDescription,
+        url: pageSEO.canonical || `${siteSettings.siteUrl}${pagePath}`,
+        siteName: siteSettings.siteName,
+        images: pageSEO.ogImage ? [
+          {
+            url: pageSEO.ogImage,
+            width: 1200,
+            height: 630,
+            alt: pageSEO.ogTitle || pageSEO.title || siteSettings.siteName,
+          },
+        ] : [],
+        locale: 'vi_VN',
+        type: 'website',
+      },
+      robots: {
+        index: !pageSEO.noindex,
+        follow: !pageSEO.nofollow,
+        googleBot: {
+          index: !pageSEO.noindex,
+          follow: !pageSEO.nofollow,
+        },
+      },
+    };
+  }
+  
+  // Fallback to default settings
+  return {
+    title: fallbackTitle || siteSettings.siteTitle,
+    description: fallbackDescription || siteSettings.defaultMetaDescription,
+    keywords: siteSettings.defaultKeywords,
+    alternates: {
+      canonical: `${siteSettings.siteUrl}${pagePath}`,
+    },
+    openGraph: {
+      title: fallbackTitle || siteSettings.siteTitle,
+      description: fallbackDescription || siteSettings.defaultMetaDescription,
+      url: `${siteSettings.siteUrl}${pagePath}`,
+      siteName: siteSettings.siteName,
+      images: [
+        {
+          url: '/og-image.png',
+          width: 1200,
+          height: 630,
+          alt: siteSettings.siteName,
+        },
+      ],
+      locale: 'vi_VN',
+      type: 'website',
+    },
+  };
 }

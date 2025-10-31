@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { getSiteSettings } from '@/lib/settings'
+import { getSiteSettings, generatePageMetadata } from '@/lib/settings'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { BinaryRain } from '@/components/binary-rain'
@@ -33,13 +33,11 @@ import {
 import Link from 'next/link'
 
 export function generateMetadata(): Metadata {
-  const settings = getSiteSettings()
-  
-  return {
-    title: `Tài Liệu Hướng Dẫn - Documentation | ${settings.siteName}`,
-    description: 'Hướng dẫn đầy đủ về cài đặt, cấu hình và sử dụng các dịch vụ của iCoderX. Documentation cho trading bots, chatbots, MMO automation và custom software.',
-    keywords: 'documentation, hướng dẫn sử dụng, tài liệu kỹ thuật, api documentation, bot setup guide, trading bot tutorial, installation guide, configuration docs',
-  }
+  return generatePageMetadata(
+    "/docs",
+    "Tài Liệu Hướng Dẫn - Documentation | iCoderX",
+    "Hướng dẫn đầy đủ về cài đặt, cấu hình và sử dụng các dịch vụ của iCoderX. Documentation cho trading bots, chatbots, MMO automation và custom software."
+  )
 }
 
 export default function DocsPage() {

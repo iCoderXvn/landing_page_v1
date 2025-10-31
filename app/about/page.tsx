@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { getSiteSettings } from '@/lib/settings'
+import { getSiteSettings, generatePageMetadata } from '@/lib/settings'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { BinaryRain } from '@/components/binary-rain'
@@ -33,13 +33,11 @@ import {
 import Link from 'next/link'
 
 export function generateMetadata(): Metadata {
-  const settings = getSiteSettings()
-  
-  return {
-    title: `Về Chúng Tôi - Công Ty Tự Động Hóa & Phát Triển Phần Mềm Hàng Đầu | ${settings.siteName}`,
-    description: 'Nhà cung cấp giải pháp tự động hóa chuyên nghiệp: bot giao dịch, tự động hóa MMO, chatbot, phát triển phần mềm tùy chỉnh. 5+ năm kinh nghiệm, 500+ dự án thành công.',
-    keywords: 'về icoderx, công ty tự động hóa, công ty phần mềm việt nam, công ty bot trading, đội ngũ phát triển chuyên nghiệp, giải pháp tự động hóa, nhà phát triển crypto bot, phần mềm tự động',
-  }
+  return generatePageMetadata(
+    "/about",
+    "Về Chúng Tôi - Công Ty Tự Động Hóa & Phát Triển Phần Mềm Hàng Đầu | iCoderX",
+    "Nhà cung cấp giải pháp tự động hóa chuyên nghiệp: bot giao dịch, tự động hóa MMO, chatbot, phát triển phần mềm tùy chỉnh. 5+ năm kinh nghiệm, 500+ dự án thành công."
+  )
 }
 
 export default function AboutPage() {

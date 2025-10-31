@@ -21,6 +21,7 @@ export default function RootLayout({
     <html lang="vi">
       <head>
         <link rel="icon" href="/favicon.ico" />
+        <link rel="manifest" href="/manifest.json" />
         <link rel="canonical" href={baseUrl} />
         <link rel="alternate" hrefLang="vi" href={baseUrl} />
         <link rel="alternate" hrefLang="x-default" href={baseUrl} />

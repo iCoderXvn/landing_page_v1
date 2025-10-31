@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
-import { getSiteSettings } from '@/lib/settings'
+import { getSiteSettings, generatePageMetadata } from '@/lib/settings'
+import { generateServicePageStructuredData, generateBreadcrumbStructuredData } from '@/lib/structured-data'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -33,23 +34,63 @@ import {
 import Link from 'next/link'
 
 export function generateMetadata(): Metadata {
-  const settings = getSiteSettings()
-
-  return {
-    title: `Chat Bot Thông Minh - AI Chatbot Development | ${settings.siteName}`,
-    description: 'Phát triển chatbot AI thông minh cho Telegram, Discord, Facebook Messenger, website. Tự động hóa customer service, quản lý cộng đồng 24/7 với NLP & Machine Learning.',
-    keywords: 'chatbot AI, bot telegram, bot discord, facebook messenger bot, website chatbot, customer service bot, AI assistant, conversational AI, NLP chatbot, machine learning bot, automated customer support, community management bot, chat automation, intelligent chatbot, virtual assistant, chatbot development, messenger automation, telegram bot API, discord bot development',
-    alternates: {
-      canonical: `${settings.siteUrl}/services/chat-bot`,
-    },
-  }
+  return generatePageMetadata(
+    "/services/chat-bot",
+    "Phát Triển Chatbot AI Thông Minh - Telegram, Discord, Messenger | iCoderX",
+    "Phát triển chatbot AI thông minh cho Telegram, Discord, Facebook Messenger, website. Tự động hóa customer service, quản lý cộng đồng 24/7 với NLP & Machine Learning."
+  )
 }
 
 export default function ChatBotPage() {
   const settings = getSiteSettings()
 
+  // Generate structured data for this service
+  const serviceStructuredData = generateServicePageStructuredData({
+    name: "Phát Triển Chatbot AI Thông Minh",
+    description: "Phát triển chatbot AI thông minh cho Telegram, Discord, Facebook Messenger, website. Tự động hóa customer service, quản lý cộng đồng 24/7 với NLP & Machine Learning.",
+    url: `${settings.siteUrl}/services/chat-bot`,
+    category: "Phát Triển Phần Mềm",
+    features: [
+      "Phát Triển Bot Telegram",
+      "Phát Triển Bot Discord", 
+      "Bot Facebook Messenger",
+      "Widget Chat Website",
+      "Xử Lý Ngôn Ngữ Tự Nhiên AI",
+      "Hỗ Trợ Đa Ngôn Ngữ",
+      "Tự Động Hóa Customer Support",
+      "Phân Tích & Báo Cáo"
+    ],
+    vietnameseKeywords: [
+      "chatbot AI", "bot telegram", "bot discord", "bot facebook",
+      "phát triển chatbot", "chatbot thông minh", "bot customer service",
+      "tự động hóa chat", "AI chatbot Việt Nam", "bot hỗ trợ khách hàng",
+      "chatbot website", "messenger bot", "telegram bot API",
+      "discord bot development", "NLP chatbot", "machine learning bot"
+    ]
+  })
+
+  const breadcrumbStructuredData = generateBreadcrumbStructuredData([
+    { name: 'Trang Chủ', href: settings.siteUrl },
+    { name: 'Dịch Vụ', href: `${settings.siteUrl}/services` },
+    { name: 'Phát Triển Chatbot AI', href: `${settings.siteUrl}/services/chat-bot` },
+  ])
+
   return (
     <div className="flex flex-col min-h-screen relative w-full overflow-x-hidden">
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceStructuredData),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbStructuredData),
+        }}
+      />
+      
       <BinaryRain />
       <Header siteName={settings.siteName} />
 

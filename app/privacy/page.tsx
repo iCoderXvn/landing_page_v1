@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { getSiteSettings } from '@/lib/settings'
+import { getSiteSettings, generatePageMetadata } from '@/lib/settings'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { BinaryRain } from '@/components/binary-rain'
@@ -26,13 +26,11 @@ import {
 import Link from 'next/link'
 
 export function generateMetadata(): Metadata {
-  const settings = getSiteSettings()
-  
-  return {
-    title: `Chính Sách Bảo Mật - Privacy Policy | ${settings.siteName}`,
-    description: 'Chính sách bảo mật và quyền riêng tư của iCoderX. Cách thức thu thập, sử dụng, bảo vệ và quản lý thông tin cá nhân của khách hàng.',
-    keywords: 'chính sách bảo mật, privacy policy, bảo vệ dữ liệu, quyền riêng tư, gdpr, thu thập thông tin, bảo mật thông tin, data protection',
-  }
+  return generatePageMetadata(
+    "/privacy",
+    "Chính Sách Bảo Mật - Privacy Policy | iCoderX",
+    "Chính sách bảo mật và quyền riêng tư của iCoderX. Cách thức thu thập, sử dụng, bảo vệ và quản lý thông tin cá nhân của khách hàng."
+  )
 }
 
 export default function PrivacyPage() {

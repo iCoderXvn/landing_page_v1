@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
-import { getSiteSettings } from '@/lib/settings'
+import { getSiteSettings, generatePageMetadata } from '@/lib/settings'
+import { generateServicePageStructuredData, generateBreadcrumbStructuredData } from '@/lib/structured-data'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -35,20 +36,46 @@ import {
 import Link from 'next/link'
 
 export function generateMetadata(): Metadata {
-  const settings = getSiteSettings()
-
-  return {
-    title: `Bot MMO & Tự Động Hóa Game | ${settings.siteName}`,
-    description: 'Phát triển bot MMO tự động, bot farming game, auto quest, auto skill. Hỗ trợ MMORPG, mobile game, web game. Tự động hóa nhân vật 24/7, tiết kiệm thời gian, tối ưu hiệu quả.',
-    keywords: 'bot MMO, bot game auto, tự động hóa game, bot farming, auto quest, auto skill, bot MMORPG, bot mobile game, bot web game, game automation, character automation, resource farming bot, leveling bot, auto grinding, macro game, script game, bot nhân vật, tool MMO, phần mềm auto game, bot thu thập tài nguyên',
-    alternates: {
-      canonical: `${settings.siteUrl}/services/mmo-automation`,
-    },
-  }
+  return generatePageMetadata(
+    "/services/mmo-automation",
+    "Tự Động Hóa Game MMO - Bot MMO & Game Automation | iCoderX",
+    "Phát triển bot MMO tự động, bot farming game, auto quest, auto skill. Hỗ trợ MMORPG, mobile game, web game. Tự động hóa nhân vật 24/7, tiết kiệm thời gian, tối ưu hiệu quả."
+  )
 }
 
 export default function MMOAutomationPage() {
   const settings = getSiteSettings()
+
+  // Generate structured data for this service
+  const serviceStructuredData = generateServicePageStructuredData({
+    name: "Tự Động Hóa Game MMO",
+    description: "Phát triển bot MMO tự động, bot farming game, auto quest, auto skill. Hỗ trợ MMORPG, mobile game, web game. Tự động hóa nhân vật 24/7, tiết kiệm thời gian, tối ưu hiệu quả.",
+    url: `${settings.siteUrl}/services/mmo-automation`,
+    category: "Phát Triển Phần Mềm",
+    features: [
+      "Bot Auto Farming",
+      "Auto Quest & Mission",
+      "Auto Skill Training",
+      "Character Automation",
+      "Resource Farming Bot",
+      "Auto Leveling System",
+      "MMORPG Bot Development",
+      "Mobile Game Automation"
+    ],
+    vietnameseKeywords: [
+      "bot MMO", "bot game auto", "tự động hóa game", "bot farming", "auto quest",
+      "auto skill", "bot MMORPG", "bot mobile game", "bot web game", "game automation",
+      "character automation", "resource farming bot", "leveling bot", "auto grinding",
+      "macro game", "script game", "bot nhân vật", "tool MMO", "phần mềm auto game",
+      "bot thu thập tài nguyên", "automation game", "game bot development"
+    ]
+  })
+
+  const breadcrumbStructuredData = generateBreadcrumbStructuredData([
+    { name: 'Trang Chủ', href: settings.siteUrl },
+    { name: 'Dịch Vụ', href: `${settings.siteUrl}/services` },
+    { name: 'Tự Động Hóa Game MMO', href: `${settings.siteUrl}/services/mmo-automation` },
+  ])
 
   return (
     <div className="flex flex-col min-h-screen relative w-full overflow-x-hidden">
@@ -622,6 +649,16 @@ export default function MMOAutomationPage() {
         twitterUrl={settings.twitterUrl}
         youtubeUrl={settings.youtubeUrl}
         telegramUrl={settings.telegramUrl}
+      />
+
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceStructuredData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
       />
     </div>
   )

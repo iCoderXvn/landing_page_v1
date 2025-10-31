@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { getSiteSettings } from '@/lib/settings'
+import { generatePageMetadata } from '@/lib/settings'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { BinaryRain } from '@/components/binary-rain'
@@ -21,13 +21,11 @@ import {
 import Link from 'next/link'
 
 export function generateMetadata(): Metadata {
-  const settings = getSiteSettings()
-  
-  return {
-    title: `Điều Khoản Dịch Vụ - Terms & Conditions | ${settings.siteName}`,
-    description: 'Điều khoản và điều kiện sử dụng dịch vụ của iCoderX. Quy định về quyền và trách nhiệm, chính sách bảo mật, thanh toán và hỗ trợ khách hàng.',
-    keywords: 'điều khoản dịch vụ, terms of service, điều kiện sử dụng, quy định dịch vụ, chính sách icoderx, hợp đồng dịch vụ, terms and conditions',
-  }
+  return generatePageMetadata(
+    "/terms",
+    "Điều Khoản Dịch Vụ - Terms & Conditions | iCoderX",
+    "Điều khoản và điều kiện sử dụng dịch vụ của iCoderX. Quy định về quyền và trách nhiệm, chính sách bảo mật, thanh toán và hỗ trợ khách hàng."
+  )
 }
 
 export default function TermsPage() {
