@@ -70,6 +70,24 @@ export function BlogPageClient({ settings }: BlogPageClientProps) {
     return colors[topicId % colors.length];
   };
 
+  // Get hover background and shadow color for each topic
+  const getTopicHoverClasses = (topicId: number) => {
+    const hoverClasses = [
+      'hover:bg-blue-500/20 hover:shadow-blue-500/50',
+      'hover:bg-purple-500/20 hover:shadow-purple-500/50',
+      'hover:bg-green-500/20 hover:shadow-green-500/50',
+      'hover:bg-orange-500/20 hover:shadow-orange-500/50',
+      'hover:bg-indigo-500/20 hover:shadow-indigo-500/50',
+      'hover:bg-yellow-500/20 hover:shadow-yellow-500/50',
+      'hover:bg-teal-500/20 hover:shadow-teal-500/50',
+      'hover:bg-pink-500/20 hover:shadow-pink-500/50',
+      'hover:bg-violet-500/20 hover:shadow-violet-500/50',
+      'hover:bg-emerald-500/20 hover:shadow-emerald-500/50'
+    ];
+    
+    return hoverClasses[topicId % hoverClasses.length];
+  };
+
   useEffect(() => {
     fetchData();
     
@@ -367,7 +385,7 @@ export function BlogPageClient({ settings }: BlogPageClientProps) {
                       px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium whitespace-nowrap transition-all duration-200
                       ${selectedTopic === topic.id.toString() 
                         ? `${getTopicColor(topic.id)} text-white shadow-lg` 
-                        : 'text-gray-300 hover:text-white hover:bg-purple-800/50'
+                        : `text-gray-300 hover:text-white ${getTopicHoverClasses(topic.id)} hover:shadow-md`
                       }
                     `}
                   >
