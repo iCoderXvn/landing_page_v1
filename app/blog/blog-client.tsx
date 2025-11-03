@@ -305,7 +305,6 @@ export function BlogPageClient({ settings }: BlogPageClientProps) {
       <div className="sticky top-[95px] md:top-[100px] z-30 w-full border-b border-purple-500/30 bg-gradient-to-r from-purple-900/40 via-violet-900/40 to-purple-900/40 backdrop-blur-md shadow-lg mt-[95px] md:mt-[100px]">
         <div className="container mx-auto px-2 md:px-6">
           <div className="flex items-center justify-start md:justify-center gap-2 md:gap-3 overflow-x-auto scrollbar-hide pb-2 pt-2 md:pb-3 md:pt-3">
-            {/* Main Categories */}
             <button
               onClick={() => {
                 setSelectedCategory('all');
@@ -354,62 +353,27 @@ export function BlogPageClient({ settings }: BlogPageClientProps) {
               Phổ Biến
             </button>
 
-            {/* Topics - with Phần Mềm as the first and most prominent */}
             {topics.length > 0 && (
               <>
                 <div className="h-4 w-px bg-purple-500/40" />
-                {/* Find and show "Phần Mềm" first with special styling */}
-                {(() => {
-                  const phanMemTopic = topics.find(t => t.name === "Phần Mềm");
-                  const otherTopics = topics.filter(t => t.name !== "Phần Mềm");
-                  
-                  return (
-                    <>
-                      {phanMemTopic && (
-                        <button
-                          key={phanMemTopic.id}
-                          onClick={() => {
-                            setSelectedCategory('all');
-                            setSelectedTopic(phanMemTopic.id.toString());
-                          }}
-                          className={`
-                            px-4 py-2 md:px-5 md:py-2.5 rounded-full text-sm md:text-base font-bold whitespace-nowrap transition-all duration-200 border-2
-                            ${selectedTopic === phanMemTopic.id.toString() 
-                              ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg shadow-blue-500/50 border-blue-400 scale-105' 
-                              : 'text-blue-300 hover:text-white hover:bg-blue-800/50 border-blue-500/50 hover:border-blue-400'
-                            }
-                          `}
-                        >
-                          🔧 {phanMemTopic.name}
-                        </button>
-                      )}
-                      
-                      {otherTopics.length > 0 && phanMemTopic && (
-                        <div className="h-4 w-px bg-purple-500/40" />
-                      )}
-                      
-                      {/* Show other topics in a more compact style */}
-                      {otherTopics.map((topic) => (
-                        <button
-                          key={topic.id}
-                          onClick={() => {
-                            setSelectedCategory('all');
-                            setSelectedTopic(topic.id.toString());
-                          }}
-                          className={`
-                            px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-200
-                            ${selectedTopic === topic.id.toString() 
-                              ? `${getTopicColor(topic.id)} text-white shadow-md` 
-                              : 'text-gray-400 hover:text-white hover:bg-purple-800/40 text-opacity-80'
-                            }
-                          `}
-                        >
-                          {topic.name}
-                        </button>
-                      ))}
-                    </>
-                  );
-                })()}
+                {topics.map((topic) => (
+                  <button
+                    key={topic.id}
+                    onClick={() => {
+                      setSelectedCategory('all');
+                      setSelectedTopic(topic.id.toString());
+                    }}
+                    className={`
+                      px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium whitespace-nowrap transition-all duration-200
+                      ${selectedTopic === topic.id.toString() 
+                        ? `${getTopicColor(topic.id)} text-white shadow-lg` 
+                        : 'text-gray-300 hover:text-white hover:bg-purple-800/50'
+                      }
+                    `}
+                  >
+                    {topic.name}
+                  </button>
+                ))}
               </>
             )}
           </div>
