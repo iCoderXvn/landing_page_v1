@@ -533,22 +533,7 @@ export const postOperations = {
       ${limit ? `LIMIT ${limit}` : ''}
     `;
     
-    return db.prepare(query).all().map((post: any) => ({
-      id: post.id,
-      title: post.title,
-      content: post.content,
-      slug: post.slug,
-      viewCount: post.view_count || 0,
-      createdAt: new Date(post.created_at),
-      isPublished: Boolean(post.is_published),
-      topicId: post.topic_id,
-      topic: post.topic_name ? {
-        id: post.topic_id,
-        name: post.topic_name,
-        description: post.topic_description,
-        createdAt: new Date()
-      } : null
-    }));
+    return db.prepare(query).all().map(mapPostFromDB);
   },
 
   // Get newest published posts
@@ -562,22 +547,7 @@ export const postOperations = {
       ${limit ? `LIMIT ${limit}` : ''}
     `;
     
-    return db.prepare(query).all().map((post: any) => ({
-      id: post.id,
-      title: post.title,
-      content: post.content,
-      slug: post.slug,
-      viewCount: post.view_count || 0,
-      createdAt: new Date(post.created_at),
-      isPublished: Boolean(post.is_published),
-      topicId: post.topic_id,
-      topic: post.topic_name ? {
-        id: post.topic_id,
-        name: post.topic_name,
-        description: post.topic_description,
-        createdAt: new Date()
-      } : null
-    }));
+    return db.prepare(query).all().map(mapPostFromDB);
   },
 
   // Get posts by topic

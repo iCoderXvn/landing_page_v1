@@ -1,6 +1,10 @@
 import { MetadataRoute } from 'next'
 import { postOperations } from '@/lib/database'
 
+// Force dynamic rendering to ensure sitemap is always fresh
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 interface Post {
   id: number
   title: string
