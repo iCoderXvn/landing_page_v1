@@ -168,15 +168,56 @@ export function BlogPageClient({ settings }: BlogPageClientProps) {
         break;
     }
     
-    // Apply topic filter
-    return currentPosts.filter(post => {
-      if (selectedTopic === "all") return true;
-      if (selectedTopic === "no-topic") return !post.topicId;
-      return post.topicId === parseInt(selectedTopic);
-    });
+    // Apply topic filter only when a specific topic is selected
+    if (selectedTopic !== "all") {
+      return currentPosts.filter(post => {
+        if (selectedTopic === "no-topic") return !post.topicId;
+        return post.topicId === parseInt(selectedTopic);
+      });
+    }
+    
+    return currentPosts;
   };
 
   const filteredPosts = getCurrentPosts();
+
+  // Group posts by topic for display in sections
+  const groupPostsByTopic = (posts: Post[]) => {
+    const phanMemTopic = topics.find(t => t.name === "Phần Mềm");
+    const otherTopics = topics.filter(t => t.name !== "Phần Mềm");
+    
+    const grouped: { [key: string]: { topic: Topic | null; posts: Post[] } } = {};
+    
+    // Group Phần Mềm posts first
+    if (phanMemTopic) {
+      grouped[`topic-${phanMemTopic.id}`] = {
+        topic: phanMemTopic,
+        posts: posts.filter(p => p.topicId === phanMemTopic.id).slice(0, 6) // Show up to 6 posts
+      };
+    }
+    
+    // Group other topics
+    otherTopics.forEach(topic => {
+      const topicPosts = posts.filter(p => p.topicId === topic.id).slice(0, 3); // Show up to 3 posts for other topics
+      if (topicPosts.length > 0) {
+        grouped[`topic-${topic.id}`] = {
+          topic,
+          posts: topicPosts
+        };
+      }
+    });
+    
+    // Group posts without topic
+    const noTopicPosts = posts.filter(p => !p.topicId).slice(0, 3);
+    if (noTopicPosts.length > 0) {
+      grouped['no-topic'] = {
+        topic: null,
+        posts: noTopicPosts
+      };
+    }
+    
+    return grouped;
+  };
 
   const renderContent = (content: string) => {
     return content
@@ -405,7 +446,8 @@ export function BlogPageClient({ settings }: BlogPageClientProps) {
               )}
             </CardContent>
           </Card>
-        ) : (
+        ) : selectedTopic !== "all" ? (
+          // Show filtered posts for specific topic (existing layout)
           <div className="space-y-8">
             {/* Hero Post - Large Featured Article */}
             {filteredPosts.length > 0 && (
@@ -537,6 +579,163 @@ export function BlogPageClient({ settings }: BlogPageClientProps) {
                 </Link>
               ))}
             </div>
+          </div>
+        ) : (
+          // Show posts grouped by topics when viewing All/Newest/Popular
+          <div className="space-y-16">
+            {(() => {
+              const groupedPosts = groupPostsByTopic(filteredPosts);
+              const phanMemTopic = topics.find(t => t.name === "Phần Mềm");
+              
+              return Object.entries(groupedPosts).map(([key, { topic, posts }]) => {
+                const isPhanMem = topic?.name === "Phần Mềm";
+                
+                return (
+                  <section key={key} className="space-y-6">
+                    {/* Topic Header */}
+                    <div className="flex items-center justify-between border-b border-gray-800 pb-4">
+                      <div className="flex items-center gap-3">
+                        {isPhanMem ? (
+                          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                            🔧 {topic?.name || "Khác"}
+                          </h2>
+                        ) : (
+                          <h2 className="text-xl md:text-2xl font-semibold text-gray-300">
+                            {topic?.name || "Khác"}
+                          </h2>
+                        )}
+                        <span className="text-sm text-gray-500">({posts.length})</span>
+                      </div>
+                      
+                      {topic && (
+                        <Link 
+                          href="#"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setSelectedTopic(topic.id.toString());
+                          }}
+                          className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
+                        >
+                          Xem tất cả →
+                        </Link>
+                      )}
+                    </div>
+
+                    {/* Posts Grid - Different layouts based on priority */}
+                    {isPhanMem ? (
+                      // Phần Mềm: Large featured layout with images
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {posts.map((post) => (
+                          <Link 
+                            key={post.id} 
+                            href={`/blog/${post.slug || post.id}`}
+                            className="block h-full"
+                          >
+                            <article className="group cursor-pointer h-full flex flex-col bg-gray-900/40 border border-gray-800/50 rounded-xl overflow-hidden hover:border-blue-500/50 hover:bg-gray-900/60 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20">
+                              {/* Image Preview */}
+                              <div className="relative h-48 bg-gradient-to-br from-blue-900/20 to-purple-900/20 overflow-hidden">
+                                {post.featuredImage && post.featuredImage.trim() !== '' ? (
+                                  <div className="relative w-full h-full">
+                                    <Image
+                                      src={post.featuredImage}
+                                      alt={post.title}
+                                      fill
+                                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                      onError={(e) => {
+                                        e.currentTarget.style.display = 'none';
+                                      }}
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                                  </div>
+                                ) : (
+                                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-900/30 to-purple-900/30">
+                                    <Zap className="w-12 h-12 text-blue-500/50" />
+                                  </div>
+                                )}
+                              </div>
+
+                              {/* Content */}
+                              <div className="flex flex-col flex-1 p-5">
+                                <h3 className="text-lg font-bold text-white mb-2 group-hover:text-blue-400 transition-colors line-clamp-2 leading-tight">
+                                  {post.title}
+                                </h3>
+
+                                <p className="text-gray-400 text-sm mb-4 leading-relaxed line-clamp-2 flex-1">
+                                  {post.excerpt || getExcerpt(post.content, 100)}
+                                </p>
+
+                                <div className="flex items-center gap-3 text-xs text-gray-500 pt-3 border-t border-gray-800/50">
+                                  <time dateTime={new Date(post.createdAt).toISOString()}>
+                                    {formatDateWithTimezone(post.createdAt, timezone)}
+                                  </time>
+                                  {post.viewCount > 0 && (
+                                    <>
+                                      <span>•</span>
+                                      <span>{post.viewCount.toLocaleString()} views</span>
+                                    </>
+                                  )}
+                                </div>
+                              </div>
+                            </article>
+                          </Link>
+                        ))}
+                      </div>
+                    ) : (
+                      // Other topics: Compact list layout, smaller or no images
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {posts.map((post) => (
+                          <Link 
+                            key={post.id} 
+                            href={`/blog/${post.slug || post.id}`}
+                            className="block"
+                          >
+                            <article className="group cursor-pointer flex gap-4 bg-gray-900/20 border border-gray-800/30 rounded-lg overflow-hidden hover:border-gray-700 hover:bg-gray-900/40 transition-all duration-300 p-4">
+                              {/* Small thumbnail - optional */}
+                              {post.featuredImage && post.featuredImage.trim() !== '' && (
+                                <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
+                                  <Image
+                                    src={post.featuredImage}
+                                    alt={post.title}
+                                    fill
+                                    className="object-cover transition-transform duration-300 group-hover:scale-110"
+                                    onError={(e) => {
+                                      e.currentTarget.style.display = 'none';
+                                    }}
+                                  />
+                                </div>
+                              )}
+
+                              {/* Content */}
+                              <div className="flex flex-col flex-1 min-w-0">
+                                <h3 className="text-base font-semibold text-white mb-1 group-hover:text-blue-400 transition-colors line-clamp-2 leading-tight">
+                                  {post.title}
+                                </h3>
+
+                                <p className="text-gray-500 text-xs mb-2 leading-relaxed line-clamp-1">
+                                  {post.excerpt || getExcerpt(post.content, 80)}
+                                </p>
+
+                                <div className="flex items-center gap-2 text-xs text-gray-600">
+                                  <time dateTime={new Date(post.createdAt).toISOString()}>
+                                    {formatDateWithTimezone(post.createdAt, timezone)}
+                                  </time>
+                                  {post.viewCount > 0 && (
+                                    <>
+                                      <span>•</span>
+                                      <span>{post.viewCount.toLocaleString()}</span>
+                                    </>
+                                  )}
+                                </div>
+                              </div>
+                            </article>
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </section>
+                );
+              });
+            })()}
           </div>
         )}
         </div>
