@@ -332,7 +332,7 @@ export function BlogPageClient({ settings }: BlogPageClientProps) {
                 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium whitespace-nowrap transition-all duration-200
                 ${selectedCategory === 'all' && selectedTopic === 'all'
                   ? 'bg-gradient-to-r from-purple-500 to-violet-500 text-white shadow-lg shadow-purple-500/50' 
-                  : 'text-gray-300 hover:text-white hover:bg-purple-800/50'
+                  : 'text-gray-300 hover:text-white hover:bg-purple-500/20 hover:shadow-md hover:shadow-purple-500/50'
                 }
               `}
             >
@@ -348,7 +348,7 @@ export function BlogPageClient({ settings }: BlogPageClientProps) {
                 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium whitespace-nowrap transition-all duration-200
                 ${selectedCategory === 'newest'
                   ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg shadow-green-500/50' 
-                  : 'text-gray-300 hover:text-white hover:bg-purple-800/50'
+                  : 'text-gray-300 hover:text-white hover:bg-green-500/20 hover:shadow-md hover:shadow-green-500/50'
                 }
               `}
             >
@@ -364,7 +364,7 @@ export function BlogPageClient({ settings }: BlogPageClientProps) {
                 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium whitespace-nowrap transition-all duration-200
                 ${selectedCategory === 'most-visited'
                   ? 'bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg shadow-red-500/50' 
-                  : 'text-gray-300 hover:text-white hover:bg-purple-800/50'
+                  : 'text-gray-300 hover:text-white hover:bg-red-500/20 hover:shadow-md hover:shadow-red-500/50'
                 }
               `}
             >
@@ -605,62 +605,149 @@ export function BlogPageClient({ settings }: BlogPageClientProps) {
 
                     {/* Posts Grid - Different layouts based on priority */}
                     {isPhanMem ? (
-                      // Phần Mềm: Large featured layout with images
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {posts.map((post) => (
+                      // Phần Mềm: Special featured layout with hero post + grid
+                      <div className="space-y-6">
+                        {/* Hero Featured Post - First post gets special treatment */}
+                        {posts.length > 0 && (
                           <Link 
-                            key={post.id} 
-                            href={`/blog/${post.slug || post.id}`}
-                            className="block h-full"
+                            href={`/blog/${posts[0].slug || posts[0].id}`}
+                            className="block"
                           >
-                            <article className="group cursor-pointer h-full flex flex-col bg-gray-900/40 border border-gray-800/50 rounded-xl overflow-hidden hover:border-blue-500/50 hover:bg-gray-900/60 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20">
-                              {/* Image Preview */}
-                              <div className="relative h-48 bg-gradient-to-br from-blue-900/20 to-purple-900/20 overflow-hidden">
-                                {post.featuredImage && post.featuredImage.trim() !== '' ? (
-                                  <div className="relative w-full h-full">
-                                    <Image
-                                      src={post.featuredImage}
-                                      alt={post.title}
-                                      fill
-                                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                                      onError={(e) => {
-                                        e.currentTarget.style.display = 'none';
-                                      }}
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                                  </div>
-                                ) : (
-                                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-900/30 to-purple-900/30">
-                                    <Zap className="w-12 h-12 text-blue-500/50" />
-                                  </div>
-                                )}
-                              </div>
-
-                              {/* Content */}
-                              <div className="flex flex-col flex-1 p-5">
-                                <h3 className="text-lg font-bold text-white mb-2 group-hover:text-blue-400 transition-colors line-clamp-2 leading-tight">
-                                  {post.title}
-                                </h3>
-
-                                <p className="text-gray-400 text-sm mb-4 leading-relaxed line-clamp-2 flex-1">
-                                  {post.excerpt || getExcerpt(post.content, 100)}
-                                </p>
-
-                                <div className="flex items-center gap-3 text-xs text-gray-500 pt-3 border-t border-gray-800/50">
-                                  <time dateTime={new Date(post.createdAt).toISOString()}>
-                                    {formatDateWithTimezone(post.createdAt, timezone)}
-                                  </time>
-                                  {post.viewCount > 0 && (
-                                    <>
-                                      <span>•</span>
-                                      <span>{post.viewCount.toLocaleString()} views</span>
-                                    </>
+                            <article className="group cursor-pointer relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-900/40 via-purple-900/40 to-cyan-900/40 border-2 border-blue-500/30 hover:border-blue-400/60 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/30">
+                              <div className="grid md:grid-cols-5 gap-0">
+                                {/* Large Image */}
+                                <div className="md:col-span-3 relative h-64 md:h-80 overflow-hidden">
+                                  {posts[0].featuredImage && posts[0].featuredImage.trim() !== '' ? (
+                                    <div className="relative w-full h-full">
+                                      <Image
+                                        src={posts[0].featuredImage}
+                                        alt={posts[0].title}
+                                        fill
+                                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                        onError={(e) => {
+                                          e.currentTarget.style.display = 'none';
+                                        }}
+                                      />
+                                      <div className="absolute inset-0 bg-gradient-to-r from-blue-900/60 via-purple-900/40 to-transparent" />
+                                      {/* Animated overlay */}
+                                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+                                    </div>
+                                  ) : (
+                                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-900/50 to-purple-900/50">
+                                      <Zap className="w-20 h-20 text-blue-400/50" />
+                                    </div>
                                   )}
+                                  
+                                  {/* Featured Badge */}
+                                  <div className="absolute top-4 left-4 flex items-center gap-2">
+                                    <span className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-xs font-bold uppercase tracking-wider shadow-lg animate-pulse">
+                                      ⭐ Nổi Bật
+                                    </span>
+                                  </div>
+                                </div>
+
+                                {/* Content */}
+                                <div className="md:col-span-2 p-6 md:p-8 flex flex-col justify-center">
+                                  <div className="flex items-center gap-2 mb-4">
+                                    <span className="text-2xl">🔧</span>
+                                    <span className="text-blue-400 font-semibold text-sm uppercase tracking-wide">
+                                      Phần Mềm
+                                    </span>
+                                  </div>
+                                  
+                                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 leading-tight group-hover:text-blue-400 transition-colors line-clamp-3">
+                                    {posts[0].title}
+                                  </h3>
+                                  
+                                  <p className="text-gray-300 text-base mb-6 leading-relaxed line-clamp-3">
+                                    {posts[0].excerpt || getExcerpt(posts[0].content, 150)}
+                                  </p>
+                                  
+                                  <div className="flex items-center gap-4 text-sm text-gray-400">
+                                    <time dateTime={new Date(posts[0].createdAt).toISOString()}>
+                                      {formatDateWithTimezone(posts[0].createdAt, timezone)}
+                                    </time>
+                                    {posts[0].viewCount > 0 && (
+                                      <>
+                                        <span>•</span>
+                                        <span className="flex items-center gap-1">
+                                          <span className="text-blue-400">👁️</span>
+                                          {posts[0].viewCount.toLocaleString()}
+                                        </span>
+                                      </>
+                                    )}
+                                  </div>
+                                  
+                                  {/* Read More Arrow */}
+                                  <div className="mt-4 flex items-center gap-2 text-blue-400 font-medium group-hover:gap-4 transition-all duration-300">
+                                    <span>Đọc thêm</span>
+                                    <span className="text-xl">→</span>
+                                  </div>
                                 </div>
                               </div>
                             </article>
                           </Link>
-                        ))}
+                        )}
+
+                        {/* Grid of remaining posts */}
+                        {posts.length > 1 && (
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {posts.slice(1).map((post) => (
+                              <Link 
+                                key={post.id} 
+                                href={`/blog/${post.slug || post.id}`}
+                                className="block h-full"
+                              >
+                                <article className="group cursor-pointer h-full flex flex-col bg-gray-900/40 border border-blue-500/20 rounded-xl overflow-hidden hover:border-blue-400/50 hover:bg-gray-900/60 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20 hover:-translate-y-1">
+                                  {/* Image Preview */}
+                                  <div className="relative h-48 bg-gradient-to-br from-blue-900/20 to-purple-900/20 overflow-hidden">
+                                    {post.featuredImage && post.featuredImage.trim() !== '' ? (
+                                      <div className="relative w-full h-full">
+                                        <Image
+                                          src={post.featuredImage}
+                                          alt={post.title}
+                                          fill
+                                          className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                          onError={(e) => {
+                                            e.currentTarget.style.display = 'none';
+                                          }}
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                                      </div>
+                                    ) : (
+                                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-900/30 to-purple-900/30">
+                                        <Zap className="w-12 h-12 text-blue-500/50" />
+                                      </div>
+                                    )}
+                                  </div>
+
+                                  {/* Content */}
+                                  <div className="flex flex-col flex-1 p-5">
+                                    <h3 className="text-lg font-bold text-white mb-2 group-hover:text-blue-400 transition-colors line-clamp-2 leading-tight">
+                                      {post.title}
+                                    </h3>
+
+                                    <p className="text-gray-400 text-sm mb-4 leading-relaxed line-clamp-2 flex-1">
+                                      {post.excerpt || getExcerpt(post.content, 100)}
+                                    </p>
+
+                                    <div className="flex items-center gap-3 text-xs text-gray-500 pt-3 border-t border-gray-800/50">
+                                      <time dateTime={new Date(post.createdAt).toISOString()}>
+                                        {formatDateWithTimezone(post.createdAt, timezone)}
+                                      </time>
+                                      {post.viewCount > 0 && (
+                                        <>
+                                          <span>•</span>
+                                          <span>{post.viewCount.toLocaleString()} views</span>
+                                        </>
+                                      )}
+                                    </div>
+                                  </div>
+                                </article>
+                              </Link>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     ) : (
                       // Other topics: Compact list layout, smaller or no images
